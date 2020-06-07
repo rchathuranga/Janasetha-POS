@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="border" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="992.0" prefWidth="1920.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.janasetha.thogakade.controller.ViewController">
+   <left>
+      <VBox prefHeight="986.0" prefWidth="240.0" style="-fx-background-color: #D4D6EF;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="btnHome" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="293.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="Dashboard" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="45.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="btnPlaceOrder" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="70.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="Place Order" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="btnManageItem" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="156.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="Manage Item" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="btnModifyBatch" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="605.0" onAction="#MenuBtnAction" prefHeight="60.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="Modify Batch" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="btnViewOrders" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="659.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="View Orders" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="btnSettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="356.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="Settings" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="605.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="#" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="668.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="235.0" ripplerFill="#d4d6ef" style="-fx-background-color: #fff;" text="#" textFill="#2c2c2c">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </JFXButton>
+            <Region prefHeight="255.0" prefWidth="240.0" VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="586.0" onAction="#MenuBtnAction" prefHeight="66.0" prefWidth="249.0" style="-fx-background-color: #FF8282;" text="Logout" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Bold" size="22.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane fx:id="window" prefHeight="992.0" prefWidth="1668.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

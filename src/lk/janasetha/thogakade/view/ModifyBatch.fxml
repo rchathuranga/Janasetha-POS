@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="900.0" prefWidth="1683.0" style="-fx-background-color: whilte;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.janasetha.thogakade.controller.ModifyBatchController">
+   <children>
+      <Label layoutX="28.0" layoutY="24.0" prefHeight="46.0" prefWidth="186.0" text="Modify Batch">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Label>
+      <TableView layoutX="84.0" layoutY="216.0" prefHeight="248.0" prefWidth="1498.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="NO" />
+          <TableColumn prefWidth="294.9333953857422" text="Supplier" />
+            <TableColumn prefWidth="294.9333953857422" text="Date" />
+            <TableColumn prefWidth="294.9333953857422" text="Time" />
+            <TableColumn prefWidth="294.9333953857422" text="Invoice No" />
+            <TableColumn prefWidth="238.6666259765625" text="Bill Total" />
+        </columns>
+      </TableView>
+      <TableView layoutX="82.0" layoutY="521.0" prefHeight="248.0" prefWidth="1498.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Item No" />
+            <TableColumn prefWidth="274.1333770751953" text="Item Description" />
+            <TableColumn prefWidth="72.80007934570312" text="Qty" />
+            <TableColumn prefWidth="99.46682739257812" text="Current Qty" />
+            <TableColumn prefWidth="99.46682739257812" text="Current Qty" />
+            <TableColumn prefWidth="145.86669921875" text="Retail Price" />
+            <TableColumn prefWidth="145.86669921875" text="Mid Price" />
+            <TableColumn prefWidth="145.86669921875" text="Wholesale Price" />
+            <TableColumn prefWidth="145.86669921875" text="Buying Price" />
+            <TableColumn prefWidth="145.86669921875" text="Manu Date" />
+            <TableColumn prefWidth="145.86669921875" text="Expire Date" />
+         </columns>
+      </TableView>
+      <Label layoutX="861.0" layoutY="92.0" prefHeight="24.0" prefWidth="290.0" text="Manu Date" />
+      <DatePicker fx:id="dtpManuDate" layoutX="862.0" layoutY="119.0" prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;" />
+      <TextField fx:id="txtBarcode" layoutX="82.0" layoutY="123.0" prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Label layoutX="82.0" layoutY="97.0" prefHeight="24.0" prefWidth="290.0" text="Barcode" />
+      <TextField fx:id="txtBarcode1" layoutX="80.0" layoutY="816.0" prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Label layoutX="80.0" layoutY="790.0" prefHeight="24.0" prefWidth="290.0" text="Qty" />
+      <JFXButton layoutX="438.0" layoutY="803.0" prefHeight="55.0" prefWidth="140.0" style="-fx-background-color: #73FFD3;" text="Update" />
+   </children>
+</AnchorPane>
