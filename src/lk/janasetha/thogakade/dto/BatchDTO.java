@@ -31,12 +31,14 @@ public class BatchDTO {
         this.billTotal = billTotal;
     }
 
-    public BatchDTO(int batchId, String supplier, Date date, Time time, String status) {
+    public BatchDTO(int batchId, String supplier, Date date, Time time, String status, String invoiceNo, double billTotal) {
         this.batchId = batchId;
         this.supplier = supplier;
         this.date = date;
         this.time = time;
         this.status = status;
+        this.invoiceNo = invoiceNo;
+        this.billTotal = billTotal;
     }
 
     public int getBatchId() {

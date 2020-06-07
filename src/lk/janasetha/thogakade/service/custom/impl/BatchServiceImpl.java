@@ -1,10 +1,5 @@
 package lk.janasetha.thogakade.service.custom.impl;
 
-import lk.janasetha.thogakade.service.custom.BatchService;
-import lk.janasetha.thogakade.repository.DAOFactory;
-import lk.janasetha.thogakade.repository.custom.BatchDAO;
-import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
-import lk.janasetha.thogakade.repository.custom.ItemDAO;
 import lk.janasetha.thogakade.db.DBConnection;
 import lk.janasetha.thogakade.dto.BatchDTO;
 import lk.janasetha.thogakade.dto.BatchDetailDTO;
@@ -12,6 +7,11 @@ import lk.janasetha.thogakade.dto.ItemDTO;
 import lk.janasetha.thogakade.model.Batch;
 import lk.janasetha.thogakade.model.BatchDetail;
 import lk.janasetha.thogakade.model.Item;
+import lk.janasetha.thogakade.repository.DAOFactory;
+import lk.janasetha.thogakade.repository.custom.BatchDAO;
+import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
+import lk.janasetha.thogakade.repository.custom.ItemDAO;
+import lk.janasetha.thogakade.service.custom.BatchService;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class BatchServiceImpl implements BatchService {
         List<BatchDTO> ret = new ArrayList<>();
 
         for (Batch batch : all) {
-            BatchDTO batchDTO = new BatchDTO(batch.getBatchId(), batch.getSupplier(), batch.getDate(), batch.getTime(), batch.getStatus());
+            BatchDTO batchDTO = new BatchDTO(batch.getBatchId(), batch.getSupplier(), batch.getDate(), batch.getTime(), batch.getStatus(), batch.getInvoiceNo(), batch.getBillTotal());
             List<BatchDetail> batchDetails = batchDetailDAO.getAllByBatchId(batch.getBatchId());
             List<BatchDetailDTO> batchDetailDTOS = new ArrayList<>();
 

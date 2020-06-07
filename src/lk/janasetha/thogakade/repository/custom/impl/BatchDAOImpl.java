@@ -1,8 +1,8 @@
 package lk.janasetha.thogakade.repository.custom.impl;
 
+import lk.janasetha.thogakade.model.Batch;
 import lk.janasetha.thogakade.repository.CrudUtil;
 import lk.janasetha.thogakade.repository.custom.BatchDAO;
-import lk.janasetha.thogakade.model.Batch;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -61,6 +61,8 @@ public class BatchDAOImpl implements BatchDAO {
             batch.setSupplier(rst.getString("supplier"));
             batch.setDate(rst.getDate("date"));
             batch.setTime(rst.getTime("time"));
+            batch.setInvoiceNo(rst.getString("invoice_no"));
+            batch.setBillTotal(rst.getDouble("bill_total"));
             batch.setStatus(rst.getString("status"));
 
             batches.add(batch);

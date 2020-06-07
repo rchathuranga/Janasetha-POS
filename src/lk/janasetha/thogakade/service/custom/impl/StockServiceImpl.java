@@ -1,16 +1,16 @@
 package lk.janasetha.thogakade.service.custom.impl;
 
-import lk.janasetha.thogakade.service.custom.StockService;
-import lk.janasetha.thogakade.repository.DAOFactory;
-import lk.janasetha.thogakade.repository.custom.BatchDAO;
-import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
-import lk.janasetha.thogakade.repository.custom.ItemDAO;
-import lk.janasetha.thogakade.repository.custom.QueryDAO;
 import lk.janasetha.thogakade.db.DBConnection;
 import lk.janasetha.thogakade.dto.*;
 import lk.janasetha.thogakade.model.Batch;
 import lk.janasetha.thogakade.model.BatchDetail;
 import lk.janasetha.thogakade.model.Item;
+import lk.janasetha.thogakade.repository.DAOFactory;
+import lk.janasetha.thogakade.repository.custom.BatchDAO;
+import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
+import lk.janasetha.thogakade.repository.custom.ItemDAO;
+import lk.janasetha.thogakade.repository.custom.QueryDAO;
+import lk.janasetha.thogakade.service.custom.StockService;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class StockServiceImpl implements StockService {
         List<Batch> allBatch = batchDAO.getAll();
 
         for (Batch batch : allBatch) {
-            BatchDTO batchDTO = new BatchDTO(batch.getBatchId(), batch.getSupplier(), batch.getDate(), batch.getTime(), batch.getStatus());
+            BatchDTO batchDTO = new BatchDTO(batch.getBatchId(), batch.getSupplier(), batch.getDate(), batch.getTime(), batch.getStatus(), batch.getInvoiceNo(), batch.getBillTotal());
             List<BatchDetailDTO> batchDetailDTOList = new ArrayList<>();
 
             List<BatchDetail> allBatchDetails = batchDetailDAO.getAllByBatchId(batch.getBatchId());
