@@ -14,8 +14,8 @@
             <Font name="System Bold" size="27.0" />
          </font>
       </Label>
-       <TableView fx:id="tblBatch" layoutX="36.0" layoutY="119.0" prefHeight="270.0" prefWidth="1590.0"
-                  stylesheets="@../assets/style/style.css">
+       <TableView fx:id="tblBatch" layoutX="36.0" layoutY="119.0" onMouseClicked="#tblBatchClickEvent"
+                  prefHeight="270.0" prefWidth="1590.0" stylesheets="@../assets/style/style.css">
         <columns>
           <TableColumn prefWidth="75.0" text="NO" />
           <TableColumn prefWidth="294.9333953857422" text="Supplier" />

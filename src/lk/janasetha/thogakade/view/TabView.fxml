@@ -2,10 +2,12 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-
-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="992.0" prefWidth="1650.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.janasetha.thogakade.controller.TabViewController">
+<TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity"
+         minHeight="-Infinity" minWidth="-Infinity" prefHeight="992.0" prefWidth="1650.0"
+         stylesheets="@../assets/style/style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.1"
+         fx:controller="lk.janasetha.thogakade.controller.TabViewController">
   <tabs>
-    <Tab fx:id="tbForm1" text="Form 1" />
+      <Tab fx:id="tbForm1" style="-fx-text-fill: #000;" text="Form 1"/>
       <Tab fx:id="tbForm2" text="Form 2" />
   </tabs>
 </TabPane>

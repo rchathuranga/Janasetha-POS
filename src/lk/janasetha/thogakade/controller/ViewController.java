@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -34,31 +35,42 @@ public class ViewController {
     @FXML
     private AnchorPane window;
 
-    private HashMap<String, Parent> viewMap = new HashMap<>();
+    private HashMap<String, String> viewMap = new HashMap<>();
     private JFXButton clickButton;
     private static final String path = "/lk/janasetha/thogakade/view/";
     private static final String extension = ".fxml";
 
     public void initialize() {
-        try {
-            Parent tabView = FXMLLoader.load(getClass().getResource(path + "tabView" + extension));
-            Parent itemForm = FXMLLoader.load(getClass().getResource(path + "ItemForm" + extension));
-            Parent home = FXMLLoader.load(getClass().getResource(path + "Dashboard" + extension));
-            Parent modifyBatch = FXMLLoader.load(getClass().getResource(path + "ModifyBatch" + extension));
-            Parent viewOrders = FXMLLoader.load(getClass().getResource(path + "ViewOrders" + extension));
-            Parent settings = FXMLLoader.load(getClass().getResource(path + "Settings" + extension));
+        String tabView = path + "tabView" + extension;
+        String itemForm = path + "ItemForm" + extension;
+        String dashboard = path + "Dashboard" + extension;
+        String modifyBatch = path + "ModifyBatch" + extension;
+        String viewOrders = path + "ViewOrders" + extension;
+        String settings = path + "Settings" + extension;
+
             viewMap.put("btnPlaceOrder", tabView);
             viewMap.put("btnManageItem", itemForm);
             viewMap.put("btnSettings", settings);
-            viewMap.put("btnHome", home);
+        viewMap.put("btnHome", dashboard);
             viewMap.put("btnModifyBatch", modifyBatch);
             viewMap.put("btnViewOrders", viewOrders);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         btnHome.fire();
+
+    }
+
+    public void get() throws FileNotFoundException {
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        viewMap.put("btnPlaceOrder", "tabView");
+        viewMap.put("btnManageItem", "ItemForm");
+        viewMap.put("btnSettings", "Settings");
+        viewMap.put("btnHome", "Dashboard");
+        viewMap.put("btnModifyBatch", "ModifyBatch");
+        viewMap.put("btnViewOrders", "ViewOrders");
+
+
     }
 
 
@@ -74,13 +86,13 @@ public class ViewController {
     }
 
 
-    private void clearAndLoadRoot(JFXButton clickedBtn, String fxmlFileName) {
+    private void clearAndLoadRoot(JFXButton clickedBtn, String fxmlFileName) throws IOException {
         if (clickButton != null) clickButton.setStyle("-fx-background-color: #fff; -fx-text-fill: #2c2c2c ");
 
         clickedBtn.setStyle("-fx-background-color: #39393A; -fx-text-fill: #fff ");
         this.clickButton = clickedBtn;
 
-        Parent root = viewMap.get(fxmlFileName);
+        Parent root = FXMLLoader.load(getClass().getResource(viewMap.get(clickedBtn.getId())));
         window.getChildren().clear();
         window.getChildren().add(root);
     }
