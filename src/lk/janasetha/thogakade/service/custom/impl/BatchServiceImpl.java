@@ -3,13 +3,16 @@ package lk.janasetha.thogakade.service.custom.impl;
 import lk.janasetha.thogakade.db.DBConnection;
 import lk.janasetha.thogakade.dto.BatchDTO;
 import lk.janasetha.thogakade.dto.BatchDetailDTO;
+import lk.janasetha.thogakade.dto.CategoryDTO;
 import lk.janasetha.thogakade.dto.ItemDTO;
 import lk.janasetha.thogakade.model.Batch;
 import lk.janasetha.thogakade.model.BatchDetail;
+import lk.janasetha.thogakade.model.Category;
 import lk.janasetha.thogakade.model.Item;
 import lk.janasetha.thogakade.repository.DAOFactory;
 import lk.janasetha.thogakade.repository.custom.BatchDAO;
 import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
+import lk.janasetha.thogakade.repository.custom.CategoryDAO;
 import lk.janasetha.thogakade.repository.custom.ItemDAO;
 import lk.janasetha.thogakade.service.custom.BatchService;
 
@@ -22,6 +25,7 @@ public class BatchServiceImpl implements BatchService {
     private BatchDAO batchDAO = (BatchDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.BATCH);
     private BatchDetailDAO batchDetailDAO = (BatchDetailDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.BATCHDETAIL);
     private ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.ITEM);
+    private CategoryDAO categoryDAO = (CategoryDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.CATEGORY);
 
     @Override
     public List<BatchDTO> getAllBatch() throws Exception {
@@ -40,7 +44,13 @@ public class BatchServiceImpl implements BatchService {
 
                 ItemDTO itemDTO = null;
                 if(search!=null){
-                    itemDTO=new ItemDTO(search.getItemCode(), search.getDescription(), search.getStatus(), search.getCategoryId(), search.getBarcode());
+                    Category category = categoryDAO.search(search.getCategoryId());
+                    CategoryDTO categoryDTO = new CategoryDTO();
+                    categoryDTO.setCateId(category.getCateId());
+                    categoryDTO.setDescription(category.getDescription());
+                    categoryDTO.setStatus(category.getStatus());
+
+                    itemDTO = new ItemDTO(search.getItemCode(), search.getDescription(), search.getStatus(), categoryDTO, search.getBarcode());
                 }
 
                 BatchDetailDTO batchDetailDTO = new BatchDetailDTO(bd.getBidId(), bd.getBatchId(), itemDTO, bd.getQty(), bd.getCurrentStock(), bd.getRetailPrice(), bd.getMidPrice(), bd.getWholesalePrice(), bd.getBuyingPrice(), bd.getManufactureDate(), bd.getExpireDate());

@@ -21,18 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabViewController {
-
     @FXML
     private TabPane tabPane;
-
     @FXML
     private Tab tbForm1;
-
     @FXML
     private Tab tbForm2;
 
     private StyleSheet styleSheet;
-
     private ArrayList<String> colorMap = new ArrayList();
 
     public TabViewController() {
@@ -73,24 +69,25 @@ public class TabViewController {
                     public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
 
 
+
                         System.out.println("CHANGED");
 
                     }
                 }
         );
-
-
     }
 
     private void setTabColors(List<Tab> tabs) {
         for (int i = 0; i < tabs.size(); i++) {
             Tab tab = tabs.get(i);
-            tab.setStyle(colorMap.get(i));
+            String[] tbForms = tab.getId().split("tbForm");
+            int tabId = Integer.parseInt(tbForms[1]);
+            tab.setStyle(colorMap.get(tabId - 1));
         }
     }
 
     private void initiateKeyBindTabSwitch() {
-        final KeyCombination kb = new KeyCodeCombination(KeyCode.TAB, KeyCombination.CONTROL_DOWN);
+        final KeyCombination kb = new KeyCodeCombination(KeyCode.BACK_QUOTE, KeyCombination.CONTROL_DOWN);
         StartUp.scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (kb.match(event)) {
                 int selectedIndex = tabPane.getSelectionModel().getSelectedIndex();
@@ -102,5 +99,4 @@ public class TabViewController {
             }
         });
     }
-
 }

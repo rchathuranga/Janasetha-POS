@@ -1,0 +1,10 @@
+
+L
+java:S1481J"*Remove this unused "total" local variable.(š‚•Ÿúÿÿÿÿ8—ù³™¨.
+a
+java:S1128"ERemove this unused import 'lk.janasetha.thogakade.model.BatchDetail'.(³¼ía8ýæ¢ª¨.
+r	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÆ†Ãüÿÿÿÿ8—ù³™¨.
+u	java:S116"TRename this field "item_List" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï°Ìâûÿÿÿÿ8—ù³™¨.
+V
+java:S1144y"4Remove this unused private "validatePayment" method.(Å¡½Åûÿÿÿÿ8—ù³™¨.
+s	java:S117Œ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·§®Žúÿÿÿÿ8—ù³™¨.

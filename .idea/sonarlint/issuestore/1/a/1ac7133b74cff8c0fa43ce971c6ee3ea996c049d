@@ -1,0 +1,11 @@
+
+m
+java:S1450"RRemove the "sql" field and declare it as a local variable in the relevant methods.(ş²©ÿÿÿÿÿ
+A
+java:S1168>"+Return an empty collection instead of null.(¥¹ï
+>
+java:S1148("#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+K
+java:S1068".Remove this unused "connection" private field.(ÿ›ÅÒ8“ÂÃÂ§.
+|
+java:S1488""aImmediately return this expression instead of assigning it to the temporary variable "lastAddId".(ùÀ¹¾ûÿÿÿÿ

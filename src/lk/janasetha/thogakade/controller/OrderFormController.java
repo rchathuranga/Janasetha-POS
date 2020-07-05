@@ -25,9 +25,9 @@ import java.util.List;
 
 public class OrderFormController {
     @FXML
-    private Button btnAdd;
+    private Button btnTabAdd;
     @FXML
-    private Button btnRemove;
+    private Button btnTabRemove;
     @FXML
     private JFXButton btnPlaceOrder;
     @FXML
@@ -120,36 +120,23 @@ public class OrderFormController {
         txtPayedAmount.requestFocus();
     }
 
+    private ArrayList<Integer> tabNumbered = new ArrayList<>();
+
     @FXML
     void btnAddAction(ActionEvent event) throws IOException {
-
-        Parent parent = btnAdd.getParent().getParent().getParent();
+        Parent parent = btnTabAdd.getParent().getParent().getParent();
         TabPane pane = (TabPane) parent;
 
         ObservableList<Tab> tabs = pane.getTabs();
+        if (tabs.size() < SysConfig.ORDER_FORM_TAB_MAX_LIMIT) {
+            Tab tab = new Tab("Form " + (tabs.size() + 1));
+            tab.setId("tbForm" + (tabs.size() + 1));
+            tab.setContent(parent);
 
-        Tab tab = new Tab("Form " + (tabs.size() + 1));
-        tab.setId("tbForm" + (tabs.size() + 1));
-        tab.setContent(parent);
+            Parent root = FXMLLoader.load(getClass().getResource("/lk/janasetha/thogakade/view/" + "OrderForm" + ".fxml"));
+            tab.setContent(root);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/lk/janasetha/thogakade/view/" + "OrderForm" + ".fxml"));
-        tab.setContent(root);
-
-
-        tabs.add(tab);
-
-
-    }
-
-    @FXML
-    void btnRemoveAction(ActionEvent event) {
-
-        Parent parent = btnAdd.getParent().getParent().getParent();
-        TabPane pane = (TabPane) parent;
-
-        Tab selectedItem = pane.getSelectionModel().getSelectedItem();
-        if (pane.getTabs().size() != 1) {
-            pane.getTabs().remove(selectedItem);
+            tabs.add(tab);
         }
     }
 
@@ -182,17 +169,15 @@ public class OrderFormController {
         calculateOrderTotal();
     }
 
-
     @FXML
-    void txtQtyKeyPress(KeyEvent event) {
-        String text = txtQty.getText();
-        if (text.equalsIgnoreCase("")) text = "1";
+    void btnRemoveAction(ActionEvent event) {
 
-        if (text.matches("[0-9]{1,5}")) {
-            itemQty = Integer.parseInt(text);
-            setItemTotal(calculateItemTotal(selectedItem));
-        } else {
-            new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered").show();
+        Parent parent = btnTabAdd.getParent().getParent().getParent();
+        TabPane pane = (TabPane) parent;
+
+        Tab selectedItem = pane.getSelectionModel().getSelectedItem();
+        if (pane.getTabs().size() != 1) {
+            pane.getTabs().remove(selectedItem);
         }
     }
 
@@ -252,15 +237,26 @@ public class OrderFormController {
     }
 
     @FXML
-    void txtPayedAmountAction(ActionEvent event) {
-        String text = txtPayedAmount.getText();
-        setPaidAmount(Double.valueOf(text));
+    void txtQtyKeyPress(KeyEvent event) {
+        String text = txtQty.getText();
+        if (text.equalsIgnoreCase("")) text = "1";
+
+        if (text.matches("[0-9]{1,5}")) {
+            itemQty = Integer.parseInt(text);
+            setItemTotal(calculateItemTotal(selectedItem));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered");
+            alert.show();
+            txtQty.setText("");
+            txtQty.requestFocus();
+        }
     }
 
     @FXML
-    void txtPayedAmountKeyPress(KeyEvent event) {
+    void txtPayedAmountAction(ActionEvent event) {
         String text = txtPayedAmount.getText();
-        setPaidAmount(Double.valueOf(text));
+        this.paidAmount = Double.parseDouble(text);
+        setBalance();
     }
 
     @FXML
@@ -268,6 +264,12 @@ public class OrderFormController {
         processPlaceOrder();
     }
 
+    @FXML
+    void txtPayedAmountKeyPress(KeyEvent event) {
+        String text = txtPayedAmount.getText();
+        this.paidAmount = Double.parseDouble(text);
+        setBalance();
+    }
 
     /**
      * -------------------------------------------------------------------------------------------------------------
@@ -290,24 +292,8 @@ public class OrderFormController {
         tblList.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("sellingTotal"));
         tblList.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("removeButton"));
 
-        cmbPriceTag.setItems(FXCollections.observableArrayList(SysConfig.SALES_TYPE_RETAIL,SysConfig.SALES_TYPE_MID,SysConfig.SALES_TYPE_WHOLESALE));
+        cmbPriceTag.setItems(FXCollections.observableArrayList(SysConfig.SALES_TYPE_RETAIL, SysConfig.SALES_TYPE_MID, SysConfig.SALES_TYPE_WHOLESALE));
         cmbPriceTag.getSelectionModel().selectFirst();
-    }
-
-    private void loadTableFromQueryDTO(List<QueryDTO> list) {
-        List<ItemTM> tableModel = new ArrayList<>();
-        list.forEach(q -> {
-            ItemTM itemTM = new ItemTM(q.getItemCode(), q.getDescription(), q.getCurrentQty(), q.getRetailPrice(), q.getMidPrice(), q.getWholesalePrice());
-            System.out.println(q.getBilDescription());
-            itemTM.setBillDescription(q.getBilDescription());
-            tableModel.add(itemTM);
-        });
-        tblItems.setItems(FXCollections.observableList(tableModel));
-
-        if (tableModel.size() == 1) {
-            tblItems.getSelectionModel().selectFirst();
-            tblListClickEvent(null);
-        }
     }
 
     private void txtBarcodeChangeEvent(String changedValue) {
@@ -380,33 +366,22 @@ public class OrderFormController {
         setOrderTotal(orderTotal);
     }
 
-    private void processPlaceOrder() {
+    private void loadTableFromQueryDTO(List<QueryDTO> list) {
+        List<ItemTM> tableModel = new ArrayList<>();
+        list.forEach(q -> {
+            ItemTM itemTM = new ItemTM(q.getItemCode(), q.getDescription(), q.getCurrentQty(), q.getRetailPrice(), q.getMidPrice(), q.getWholesalePrice());
+//            System.out.println(q.getBilDescription());
+            itemTM.setBillDescription(q.getBilDescription());
+            tableModel.add(itemTM);
+        });
 
-        OrderDTO orderDTO = new OrderDTO("B6NEW", cmbPriceTag.getValue(), paidAmount, balance, orderTotal);
-        List<OrderDetailDTO> items = new ArrayList<>();
+        boolean isPreEmpty = tblItems.getItems().isEmpty();
 
-        for (int i = 0; i < tblList.getItems().size(); i++) {
-            ItemTM itemTM = tblList.getItems().get(i);
-            OrderDetailDTO rawRice = new OrderDetailDTO(new BatchDetailDTO(0, new ItemDTO(itemTM.getItemCode())), itemTM.getSellingQty(), itemTM.getSellingPrice(), itemTM.getSellingTotal());
-            items.add(rawRice);
-        }
+        tblItems.setItems(FXCollections.observableList(tableModel));
 
-        CompleteOrderDTO completeOrderDTO = new CompleteOrderDTO();
-        completeOrderDTO.setOrder(orderDTO);
-        completeOrderDTO.setItems(items);
-
-        try {
-
-            System.out.println("000000000000000000000000  000000000000000000000000");
-            orderBO.addOrder(completeOrderDTO);
-            System.out.println("000000000000000000000000  000000000000000000000000");
-
-
-            System.out.println();
-            System.out.println(orderBO.getItem_List());
-            System.out.println();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (isPreEmpty || tableModel.size() == 1) {
+            tblItems.getSelectionModel().selectFirst();
+            tblListClickEvent(null);
         }
     }
 
@@ -450,8 +425,56 @@ public class OrderFormController {
         setBalance();
     }
 
+    private void processPlaceOrder() {
+
+        OrderDTO orderDTO = new OrderDTO("B6NEW", cmbPriceTag.getValue(), paidAmount, balance, orderTotal);
+        List<OrderDetailDTO> items = new ArrayList<>();
+
+        for (int i = 0; i < tblList.getItems().size(); i++) {
+            ItemTM itemTM = tblList.getItems().get(i);
+            OrderDetailDTO rawRice = new OrderDetailDTO(new BatchDetailDTO(0, new ItemDTO(itemTM.getItemCode())), itemTM.getSellingQty(), itemTM.getSellingPrice(), itemTM.getSellingTotal());
+            items.add(rawRice);
+        }
+
+        CompleteOrderDTO completeOrderDTO = new CompleteOrderDTO();
+        completeOrderDTO.setOrder(orderDTO);
+        completeOrderDTO.setItems(items);
+
+        try {
+
+            System.out.println("000000000000000000000000  000000000000000000000000");
+            orderBO.addOrder(completeOrderDTO);
+            System.out.println("000000000000000000000000  000000000000000000000000");
+
+            System.out.println("orderbo-item_list : " + orderBO.getItem_List());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setBalance() {
-        this.balance = paidAmount-orderTotal;
+        this.balance = paidAmount - orderTotal;
         lblBalance.setText(String.valueOf(balance));
     }
+
+    private int getNextNumber() {
+        Parent parent = btnTabAdd.getParent().getParent().getParent();
+        TabPane pane = (TabPane) parent;
+        ObservableList<Tab> tabs = pane.getTabs();
+
+        for (int i = 0; i < 8; i++) {
+            int tabId = Integer.parseInt(tabs.get(i).getId().split("tbForm")[1]);
+            if (tabId != i) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    @FXML
+    void btnClearFields(ActionEvent event) {
+        selectedItem = null;
+    }
 }
+

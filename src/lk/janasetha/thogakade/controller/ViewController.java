@@ -40,6 +40,8 @@ public class ViewController {
     private static final String path = "/lk/janasetha/thogakade/view/";
     private static final String extension = ".fxml";
 
+    private static Parent btnPlaceOrderUI;
+
     public void initialize() {
         String tabView = path + "tabView" + extension;
         String itemForm = path + "ItemForm" + extension;
@@ -48,16 +50,15 @@ public class ViewController {
         String viewOrders = path + "ViewOrders" + extension;
         String settings = path + "Settings" + extension;
 
-            viewMap.put("btnPlaceOrder", tabView);
-            viewMap.put("btnManageItem", itemForm);
-            viewMap.put("btnSettings", settings);
+        viewMap.put("btnPlaceOrder", tabView);
+        viewMap.put("btnManageItem", itemForm);
+        viewMap.put("btnSettings", settings);
         viewMap.put("btnHome", dashboard);
-            viewMap.put("btnModifyBatch", modifyBatch);
-            viewMap.put("btnViewOrders", viewOrders);
+        viewMap.put("btnModifyBatch", modifyBatch);
+        viewMap.put("btnViewOrders", viewOrders);
 
 
         btnHome.fire();
-
     }
 
     public void get() throws FileNotFoundException {
@@ -85,14 +86,25 @@ public class ViewController {
         }
     }
 
-
     private void clearAndLoadRoot(JFXButton clickedBtn, String fxmlFileName) throws IOException {
         if (clickButton != null) clickButton.setStyle("-fx-background-color: #fff; -fx-text-fill: #2c2c2c ");
-
         clickedBtn.setStyle("-fx-background-color: #39393A; -fx-text-fill: #fff ");
-        this.clickButton = clickedBtn;
 
-        Parent root = FXMLLoader.load(getClass().getResource(viewMap.get(clickedBtn.getId())));
+        this.clickButton = clickedBtn;
+        Parent root;
+        if (clickedBtn.getId().equals("btnPlaceOrder")) {
+
+            if (btnPlaceOrderUI == null) {
+                btnPlaceOrderUI = FXMLLoader.load(getClass().getResource(path + "tabView" + extension));
+                root = btnPlaceOrderUI;
+            } else {
+                root = btnPlaceOrderUI;
+            }
+
+        } else {
+            root = FXMLLoader.load(getClass().getResource(viewMap.get(clickedBtn.getId())));
+        }
+
         window.getChildren().clear();
         window.getChildren().add(root);
     }

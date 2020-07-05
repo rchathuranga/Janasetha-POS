@@ -1,32 +1,26 @@
 package lk.janasetha.thogakade.utill;
 
-import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+
+import java.util.Date;
 
 public class MyLogger {
 
-    public static final Logger logger = Logger.getLogger("Janasetha Logger");
+    private static MyLogger myLogger;
 
-    public static void debug(){
-        FileHandler fh;
+    private MyLogger() {
+    }
 
-        try {
-
-            // This block configure the logger with handler and formatter
-            fh = new FileHandler("G:\\Janasetha\\New\\janasetha_log\\MyLogFile.log");
-            logger.addHandler(fh);
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-
-            // the following statement is used to log any messages
-//            logger.info("My first log");
-
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static MyLogger getLogger() {
+        if (myLogger == null) {
+            myLogger = new MyLogger();
         }
+        return myLogger;
+    }
+
+    public void debug(Object msg) {
+        System.out.print("Janasetha ");
+        System.out.print("Thogakade | ");
+        System.out.print(new Date().toString() + " | ");
+        System.out.println(msg.toString());
     }
 }

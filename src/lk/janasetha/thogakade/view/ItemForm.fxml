@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.text.*?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="953.0" prefWidth="1683.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.janasetha.thogakade.controller.ItemFormController">
    <children>
       <Label layoutX="31.0" layoutY="28.0" prefHeight="46.0" prefWidth="249.0" text="Item Management">
@@ -103,7 +96,9 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </TextField>
-            <JFXButton fx:id="btnAddToList" buttonType="RAISED" layoutX="356.0" layoutY="440.0" onAction="#btnAddToListAction" prefHeight="55.0" prefWidth="292.0" style="-fx-background-color: #73FFD3;" text="ADD">
+            <JFXButton fx:id="btnAddToList" buttonType="RAISED" layoutX="430.0" layoutY="440.0"
+                       onAction="#btnAddToListAction" prefHeight="55.0" prefWidth="218.0"
+                       style="-fx-background-color: #73FFD3;" text="ADD">
                <font>
                   <Font name="Roboto Regular" size="27.0" />
                </font>
@@ -139,9 +134,18 @@
             </TextField>
             <Label layoutX="355.0" layoutY="254.0" prefHeight="24.0" prefWidth="290.0" text="Category" />
             <ComboBox fx:id="cmbCategory" layoutX="352.0" layoutY="282.0" prefHeight="40.0" prefWidth="290.0" />
+            <JFXButton fx:id="btnClearFields" layoutX="355.0" layoutY="441.0" onAction="#btnClearFields"
+                       prefHeight="24.0" prefWidth="30.0" style="-fx-background-color: #FF8282;" text="x"
+                       textOverrun="CLIP">
+               <font>
+                  <Font name="Roboto Regular" size="28.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </JFXButton>
          </children>
       </AnchorPane>
-      <Separator layoutX="747.0" layoutY="88.0" orientation="VERTICAL" prefHeight="756.0" prefWidth="0.0" />
       <AnchorPane layoutX="768.0" layoutY="91.0" prefHeight="827.0" prefWidth="822.0" style="-fx-border-color: black; -fx-border-radius: 3;">
          <children>
             <TableView fx:id="tblBatchDetail" layoutX="10.0" layoutY="126.0" prefHeight="501.0" prefWidth="798.0" stylesheets="@../assets/style/style.css">

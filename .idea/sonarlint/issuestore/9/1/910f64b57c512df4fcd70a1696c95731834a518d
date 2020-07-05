@@ -1,0 +1,37 @@
+
+G
+java:S1602T",Remove useless curly braces around statement(â˜¸×ûÿÿÿÿ
+<
+java:S2178¨"Correct this "&" to "&&".(«Ÿ—ªşÿÿÿÿ8ışœ¨.
+T
+java:S1481Ç"1Remove this unused "barcodeAlert" local variable.(ëáü¢øÿÿÿÿ8ışœ¨.
+>
+java:S1148a"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+R
+java:S1066Â"/Merge this if statement with the enclosing one.(µ‹Ìîùÿÿÿÿ8ışœ¨.
+F
+java:S1148œ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ışœ¨.
+‰
+java:S2178š"fCorrect this "&" to "&&" and extract the right operand to a variable if it should always be evaluated.(ÑÈÏùÿÿÿÿ8ışœ¨.
+B
+java:S1602Q",Remove useless curly braces around statement(ÓÙŞÊ
+<
+java:S2178¨"Correct this "&" to "&&".(«Ÿ—ªşÿÿÿÿ8ışœ¨.
+<
+java:S2178¨"Correct this "&" to "&&".(«Ÿ—ªşÿÿÿÿ8ışœ¨.
+J
+java:S1659³"'Declare "wholesale" on a separate line.(¿êÆğûÿÿÿÿ8ışœ¨.
+D
+java:S1659³"!Declare "mid" on a separate line.(¿êÆğûÿÿÿÿ8ışœ¨.
+F
+java:S1148‹"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ışœ¨.
+U
+java:S1135È"2Complete the task associated to this TODO comment.(´Ø¢ şÿÿÿÿ8ışœ¨.
+F
+java:S1148ı"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ışœ¨.
+F
+java:S1148¦"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ışœ¨.
+a
+java:S1128"?Remove this unused import 'lk.janasetha.thogakade.model.Batch'.(ˆØ‘£ûÿÿÿÿ8ëÿĞš¨.
+G
+java:S1659³"$Declare "retail" on a separate line.(¿êÆğûÿÿÿÿ8ışœ¨.

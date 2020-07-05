@@ -4,12 +4,10 @@ import lk.janasetha.thogakade.db.DBConnection;
 import lk.janasetha.thogakade.dto.*;
 import lk.janasetha.thogakade.model.Batch;
 import lk.janasetha.thogakade.model.BatchDetail;
+import lk.janasetha.thogakade.model.Category;
 import lk.janasetha.thogakade.model.Item;
 import lk.janasetha.thogakade.repository.DAOFactory;
-import lk.janasetha.thogakade.repository.custom.BatchDAO;
-import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
-import lk.janasetha.thogakade.repository.custom.ItemDAO;
-import lk.janasetha.thogakade.repository.custom.QueryDAO;
+import lk.janasetha.thogakade.repository.custom.*;
 import lk.janasetha.thogakade.service.custom.StockService;
 
 import java.sql.Connection;
@@ -21,6 +19,7 @@ public class StockServiceImpl implements StockService {
     private final ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.ITEM);
     private final BatchDAO batchDAO = (BatchDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.BATCH);
     private final BatchDetailDAO batchDetailDAO = (BatchDetailDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.BATCHDETAIL);
+    private CategoryDAO categoryDAO = (CategoryDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.CATEGORY);
     private final QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.QUERY);
 
     @Override
@@ -44,7 +43,7 @@ public class StockServiceImpl implements StockService {
 
 
                 if (itemId == 0) {
-                    Item item = new Item(itemDTO.getDescription(),itemDTO.getBillDescription(), itemDTO.getStatus(), itemDTO.getCategoryId(), itemDTO.getBarcode());
+                    Item item = new Item(itemDTO.getDescription(), itemDTO.getBillDescription(), itemDTO.getStatus(), itemDTO.getCategory().getCateId(), itemDTO.getBarcode());
                     itemId = itemDAO.add(item);
                 }
 
@@ -99,11 +98,18 @@ public class StockServiceImpl implements StockService {
             List<BatchDetail> allBatchDetails = batchDetailDAO.getAllByBatchId(batch.getBatchId());
 
             for (BatchDetail batchDetail : allBatchDetails) {
-
                 Item search = itemDAO.search(batchDetail.getItemCode());
+
+                Category category = categoryDAO.search(search.getCategoryId());
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setCateId(category.getCateId());
+                categoryDTO.setDescription(category.getDescription());
+                categoryDTO.setStatus(category.getStatus());
+
+
                 ItemDTO itemDTO = new ItemDTO(search.getItemCode(),
                         search.getDescription(), search.getStatus(),
-                        search.getCategoryId(),
+                        categoryDTO,
                         search.getBarcode());
 
                 BatchDetailDTO batchDetailDTO = new BatchDetailDTO(batchDetail.getBidId(), batchDetail.getBatchId(),itemDTO, batchDetail.getQty(), batchDetail.getCurrentStock(), batchDetail.getRetailPrice(),
@@ -137,11 +143,17 @@ public class StockServiceImpl implements StockService {
             for (Item item : all) {
                 ItemDTO itemDTO = new ItemDTO();
 
+                Category category = categoryDAO.search(item.getCategoryId());
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setCateId(category.getCateId());
+                categoryDTO.setDescription(category.getDescription());
+                categoryDTO.setStatus(category.getStatus());
+
                 itemDTO.setItemCode(item.getItemCode());
                 itemDTO.setDescription(item.getDescription());
                 itemDTO.setBillDescription(item.getBillDescription());
                 itemDTO.setRegularPrice(item.getRegularPrice());
-                itemDTO.setCategoryId(item.getCategoryId());
+                itemDTO.setCategory(categoryDTO);
                 itemDTO.setStatus(item.getStatus());
                 itemDTO.setQtyOnHand(batchDetailDAO.getQtyOnHand(item.getItemCode()));
 
@@ -163,11 +175,17 @@ public class StockServiceImpl implements StockService {
             for (Item item : all) {
                 ItemDTO itemDTO = new ItemDTO();
 
+                Category category = categoryDAO.search(item.getCategoryId());
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setCateId(category.getCateId());
+                categoryDTO.setDescription(category.getDescription());
+                categoryDTO.setStatus(category.getStatus());
+
                 itemDTO.setItemCode(item.getItemCode());
                 itemDTO.setDescription(item.getDescription());
                 itemDTO.setBillDescription(item.getBillDescription());
                 itemDTO.setRegularPrice(item.getRegularPrice());
-                itemDTO.setCategoryId(item.getCategoryId());
+                itemDTO.setCategory(categoryDTO);
                 itemDTO.setStatus(item.getStatus());
                 itemDTO.setQtyOnHand(batchDetailDAO.getQtyOnHand(item.getItemCode()));
 
@@ -189,11 +207,17 @@ public class StockServiceImpl implements StockService {
             for (Item item : all) {
                 ItemDTO itemDTO = new ItemDTO();
 
+                Category category = categoryDAO.search(item.getCategoryId());
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setCateId(category.getCateId());
+                categoryDTO.setDescription(category.getDescription());
+                categoryDTO.setStatus(category.getStatus());
+
                 itemDTO.setItemCode(item.getItemCode());
                 itemDTO.setDescription(item.getDescription());
                 itemDTO.setBillDescription(item.getBillDescription());
                 itemDTO.setRegularPrice(item.getRegularPrice());
-                itemDTO.setCategoryId(item.getCategoryId());
+                itemDTO.setCategory(categoryDTO);
                 itemDTO.setStatus(item.getStatus());
                 itemDTO.setQtyOnHand(batchDetailDAO.getQtyOnHand(item.getItemCode()));
 

@@ -1,8 +1,8 @@
 package lk.janasetha.thogakade.repository.custom.impl;
 
+import lk.janasetha.thogakade.model.Item;
 import lk.janasetha.thogakade.repository.CrudUtil;
 import lk.janasetha.thogakade.repository.custom.ItemDAO;
-import lk.janasetha.thogakade.model.Item;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Integer add(Item item) throws Exception{
-        sql = "INSERT INTO item(description,bill_description,status,cate_id,barcode) VALUES(?,?,?,?)";
+        sql = "INSERT INTO item(description,bill_description,status,cate_id,barcode) VALUES(?,?,?,?,?)";
 
         boolean itemAdded = CrudUtil.executeUpdate( sql, item.getDescription(), item.getBillDescription(),item.getStatus(), item.getCategoryId(), item.getBarcode());
 

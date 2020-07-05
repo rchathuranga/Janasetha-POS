@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1683.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.janasetha.thogakade.controller.DashboardController">
+   <children>
+      <Label layoutX="31.0" layoutY="28.0" prefHeight="46.0" prefWidth="249.0" text="Dashboard">
+         <font>
+            <Font name="Roboto Bold" size="30.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="71.0" layoutY="95.0" prefHeight="721.0" prefWidth="723.0" style="-fx-border-color: black; -fx-border-radius: 3;">
+         <children>
+            <Label alignment="CENTER" layoutX="73.0" layoutY="14.0" prefHeight="98.0" prefWidth="116.0" text="00" textFill="#1fffb9">
+               <font>
+                  <Font name="Consolas Bold" size="53.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="61.0" layoutY="110.0" prefHeight="34.0" prefWidth="139.0" text="Customers">
+               <font>
+                  <Font name="Arial Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="290.0" layoutY="14.0" prefHeight="98.0" prefWidth="116.0" text="00" textFill="#1fffb9">
+               <font>
+                  <Font name="Consolas Bold" size="53.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="258.0" layoutY="110.0" prefHeight="34.0" prefWidth="180.0" text="Sales Today">
+               <font>
+                  <Font name="Arial Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="518.0" layoutY="14.0" prefHeight="98.0" prefWidth="116.0" text="00" textFill="#1fffb9">
+               <font>
+                  <Font name="Consolas Bold" size="53.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="486.0" layoutY="110.0" prefHeight="34.0" prefWidth="180.0" text="Repairs to Do">
+               <font>
+                  <Font name="Arial Bold" size="22.0" />
+               </font>
+            </Label>
+            <TableView layoutX="31.0" layoutY="226.0" prefHeight="358.0" prefWidth="650.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+      <AnchorPane layoutX="801.0" layoutY="95.0" prefHeight="370.0" prefWidth="723.0" style="-fx-border-color: black; -fx-border-radius: 3;" />
+   </children>
+</AnchorPane>

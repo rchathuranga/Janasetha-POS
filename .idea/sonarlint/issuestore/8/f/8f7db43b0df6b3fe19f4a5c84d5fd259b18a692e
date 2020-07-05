@@ -1,0 +1,10 @@
+
+a	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(๕ึ฿๛ÿÿÿÿ
+`
+java:S1155r">Use isEmpty() to check whether the collection is empty or not.(๗ี๐๛ÿÿÿÿ8ÿคลยง.
+
+java:S1488"aImmediately return this expression instead of assigning it to the temporary variable "lastAddId".(๙ภนพ๛ÿÿÿÿ8ÿคลยง.
+v
+java:S1450"YRemove the "connection" field and declare it as a local variable in the relevant methods.(ÿลา8ÿคลยง.
+K
+java:S1068".Remove this unused "connection" private field.(ÿลา8ÿคลยง.

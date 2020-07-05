@@ -1,0 +1,16 @@
+
+>
+java:S1148U"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+P
+java:S1172Z"3Remove this unused method parameter "fxmlFileName".(ûâÿ´8äôûÖ°.
+“
+java:S1130@"vRemove the declaration of thrown exception 'java.io.FileNotFoundException', as it cannot be thrown from method's body.(Õ„â³8äôûÖ°.
+]
+java:S1075("ARefactor your code to get this URI from a customizable parameter.(ôÔ“8äôûÖ°.
+o	java:S100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü½¦§ÿÿÿÿÿ8äôûÖ°.
+X
+java:S2696c"6Make the enclosing method "static" or remove this set.(Œƒ¶úÿÿÿÿ8÷±×°.
+N
+java:S1481A",Remove this unused "hashMap" local variable.(©ÉëÂøÿÿÿÿ8äôûÖ°.
+t	java:S115)"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¡öâêüÿÿÿÿ
+n	java:S115("ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ôÔ“

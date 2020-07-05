@@ -1,0 +1,36 @@
+
+I
+java:S1602e",Remove useless curly braces around statement(ÓÙŞÊ8ÕëõÙ°.
+F
+java:S1148Õ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÕëõÙ°.
+U
+java:S1144Î"2Remove this unused private "getNextNumber" method.(ùä»ıÿÿÿÿÿ8ÕëõÙ°.
+F
+java:S1068O")Remove this unused "order" private field.(ÉÏÌµ8ÕëõÙ°.
+Q
+java:S3740P"/Provide the parametrized type for this generic.(‡™£¾ùÿÿÿÿ8ÕëõÙ°.
+c
+java:S1117—"@Rename "selectedItem" which hides the field declared at line 91.(ıêåÊıÿÿÿÿ8ÕëõÙ°.
+F
+java:S1148š"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÕëõÙ°.
+F
+java:S1148Ç"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÕëõÙ°.
+E
+java:S1148o"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÕëõÙ°.
+[
+java:S1117İ"=Rename "btnRemove" which hides the field declared at line 30.(½»Ñò8ÕëõÙ°.
+O
+java:S1068Z"-Remove this unused "itemTotal" private field.(”¿¾Ïøÿÿÿÿ8ÕëõÙ°.
+z
+java:S1450Z"XRemove the "itemTotal" field and declare it as a local variable in the relevant methods.(”¿¾Ïøÿÿÿÿ8ÕëõÙ°.
+N
+java:S1602h",Remove useless curly braces around statement(â˜¸×ûÿÿÿÿ8ÕëõÙ°.
+S
+java:S1068X"1Remove this unused "itemUnitPrice" private field.(ŸÕ†øÿÿÿÿ8ÕëõÙ°.
+Y	java:S125±"<This block of commented-out lines of code should be removed.(İ˜Ó¼8ÕëõÙ°.
+~
+java:S1450X"\Remove the "itemUnitPrice" field and declare it as a local variable in the relevant methods.(ŸÕ†øÿÿÿÿ8ÕëõÙ°.
+R
+java:S1068Í"/Remove this unused "tabNumbered" private field.(ñ®ÿÿÿÿÿ8ÕëõÙ°.
+Q
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8Î°‚Ú°.

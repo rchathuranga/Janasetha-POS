@@ -4,16 +4,13 @@ import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.janasetha.thogakade.dto.*;
-import lk.janasetha.thogakade.model.Batch;
 import lk.janasetha.thogakade.service.ServiceFactory;
+import lk.janasetha.thogakade.service.custom.CategoryService;
 import lk.janasetha.thogakade.service.custom.StockService;
 import lk.janasetha.thogakade.tm.BatchDetailTM;
 
@@ -24,17 +21,15 @@ import java.util.List;
 
 public class ItemFormController {
     @FXML
-    private TableView<ItemDTO> tblItems;
-    @FXML
     private TextField txtBarcode;
     @FXML
     private TextField txtDescription;
     @FXML
-    private TextField txtBillDescription;
-    @FXML
-    private JFXButton btnAddToList;
+    private TableView<ItemDTO> tblItems;
     @FXML
     private TextField txtItemDescription;
+    @FXML
+    private TextField txtBillDescription;
     @FXML
     private TextField txtRetailPrice;
     @FXML
@@ -44,15 +39,19 @@ public class ItemFormController {
     @FXML
     private TextField txtBuyingPrice;
     @FXML
-    private TextField txtQty;
-    @FXML
     private DatePicker dtpManuDate;
     @FXML
     private DatePicker dtpExDate;
     @FXML
-    private TableView<BatchDetailTM> tblBatchDetail;
+    private TextField txtQty;
     @FXML
-    private TextField lblBillTotal;
+    private JFXButton btnAddToList;
+    @FXML
+    private TextField txtItemBarcode;
+    @FXML
+    private ComboBox<CategoryDTO> cmbCategory;
+    @FXML
+    private TableView<BatchDetailTM> tblBatchDetail;
     @FXML
     private TextField txtSupplier;
     @FXML
@@ -60,9 +59,15 @@ public class ItemFormController {
     @FXML
     private JFXButton btnAddStock;
     @FXML
+    private TextField lblBillTotal;
+    @FXML
     private JFXButton btnClearAll;
+    @FXML
+    private JFXButton btnClearFields;
 
-    StockService stockService = (StockService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.STOCK);
+
+    private StockService stockService = (StockService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.STOCK);
+    private CategoryService categoryService = (CategoryService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.CATEGORY);
 
     private ItemDTO selectedItem = null;
     private QueryDTO selectedQueryItem = null;
@@ -93,6 +98,11 @@ public class ItemFormController {
         try {
             List<ItemDTO> allItems = stockService.getAllItems();
             tblItems.setItems(FXCollections.observableArrayList(allItems));
+
+            List<CategoryDTO> categories = categoryService.getAllActiveCategories();
+            cmbCategory.setItems(FXCollections.observableList(categories));
+            cmbCategory.getSelectionModel().selectFirst();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,25 +147,31 @@ public class ItemFormController {
     void btnAddStockAction(ActionEvent event) {
         listNumber = 0;
 
+        String supplier = txtSupplier.getText();
+        String invoiceNo = txtInvoiceNo.getText();
 
-        BatchDTO batch = new BatchDTO(txtSupplier.getText(), null, null, "ACT",txtInvoiceNo.getText(),Double.parseDouble(lblBillTotal.getText()));
+        if (supplier.equals("") & invoiceNo.equals("")) {
+            new Alert(Alert.AlertType.WARNING, "Enter Supplier and Invoice No").show();
+        } else {
 
-        CompleteStockDTO stockDTO = new CompleteStockDTO();
-        stockDTO.setBatch(batch);
-        stockDTO.setBatchDetail(batchDetailDTOList);
+            BatchDTO batch = new BatchDTO(supplier, null, null, "ACT", invoiceNo, Double.parseDouble(lblBillTotal.getText()));
 
-        try {
-            int i = stockService.addNewStock(stockDTO);
-            System.out.println("00000000000000000000000000000000000000000000");
-            System.out.println(i);
-            System.out.println("00000000000000000000000000000000000000000000");
+            CompleteStockDTO stockDTO = new CompleteStockDTO();
+            stockDTO.setBatch(batch);
+            stockDTO.setBatchDetail(batchDetailDTOList);
 
-            List<ItemDTO> allItems = stockService.getAllItems();
-            tblItems.setItems(FXCollections.observableArrayList(allItems));
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+//                int i = stockService.addNewStock(stockDTO);
+                System.out.println("00000000000000000000000000000000000000000000");
+//                System.out.println(i);
+                System.out.println("00000000000000000000000000000000000000000000");
+
+                List<ItemDTO> allItems = stockService.getAllItems();
+                tblItems.setItems(FXCollections.observableArrayList(allItems));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
 
@@ -190,7 +206,11 @@ public class ItemFormController {
             buying = selectedQueryItem.getBuyingPrice();
         }
 
-        if (selectedItem == null) {
+        System.out.println("text : " + selectedItem.getDescription().equals(txtDescription.getText().trim()));
+        System.out.println("bool : " + selectedItem == null || selectedItem.getDescription().equals(txtDescription.getText().trim()));
+
+        if (selectedItem == null | !selectedItem.getDescription().equals(txtDescription.getText().trim())) {
+            System.out.println("Condition Inner");
             if (!txtItemDescription.getText().equals("")) {
 
                 String description = txtItemDescription.getText();
@@ -199,7 +219,7 @@ public class ItemFormController {
                 Alert barcodeAlert = new Alert(Alert.AlertType.INFORMATION, "Enter Product Barcode");
 //                barcodeAlert.  todo set text field to alert
 
-                selectedItem = new ItemDTO(description, billDescription, "ACT", 1, retail, null);
+                selectedItem = new ItemDTO(description, billDescription, "ACT", cmbCategory.getSelectionModel().getSelectedItem(), retail, txtItemBarcode.getText());
             }
         }
 
@@ -274,6 +294,8 @@ public class ItemFormController {
         selectedItem = tblItems.getSelectionModel().getSelectedItem();
         txtItemDescription.setPromptText(selectedItem.getDescription());
         txtBillDescription.setPromptText(selectedItem.getBillDescription());
+        txtItemBarcode.setText(selectedItem.getBarcode());
+        cmbCategory.getSelectionModel().select(selectedItem.getCategory());
 
         try {
             List<QueryDTO> batchDetailsByItemCode = stockService.getLatestBatchDetailsByItemCode(selectedItem.getItemCode());
@@ -329,5 +351,11 @@ public class ItemFormController {
 
         txtQty.setText("1");
         txtQty.setPromptText("");
+    }
+
+    @FXML
+    void btnClearFields(ActionEvent event) {
+        selectedItem = null;
+        clearTextItemArea();
     }
 }

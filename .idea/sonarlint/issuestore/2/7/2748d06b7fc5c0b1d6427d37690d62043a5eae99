@@ -1,0 +1,13 @@
+
+G
+java:S1135 "2Complete the task associated to this TODO comment.(©ûÖ4
+@
+java:S1068"*Remove this unused "LOGGER" private field.(üîÎá
+g
+java:S3008"QRename this field "LOGGER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üîÎá
+H
+java:S1444"+Make this "public static scene" field final(äõ8Úİˆ×°.
+n
+java:S1104"QMake scene a static final constant or non-public and provide accessors if needed.(äõ8Úİˆ×°.
+X
+java:S2696"6Make the enclosing method "static" or remove this set.(¦Ğ€•úÿÿÿÿ8Úİˆ×°.

@@ -7,7 +7,7 @@ public class ItemDTO {
     private String billDescription;
     private int qtyOnHand;
     private String status;
-    private int categoryId;
+    private CategoryDTO category;
     private double regularPrice;
     private String barcode;
 
@@ -18,29 +18,29 @@ public class ItemDTO {
         this.itemCode = itemCode;
     }
 
-    public ItemDTO(String description, String billDescription, String status, int categoryId, double regularPrice, String barcode) {
+    public ItemDTO(String description, String billDescription, String status, CategoryDTO category, double regularPrice, String barcode) {
         this.description = description;
         this.billDescription = billDescription;
         this.status = status;
-        this.categoryId = categoryId;
+        this.category = category;
         this.regularPrice = regularPrice;
         this.barcode = barcode;
     }
 
-    public ItemDTO(int itemCode, String description, String status, int categoryId, String barcode) {
+    public ItemDTO(int itemCode, String description, String status, CategoryDTO category, String barcode) {
         this.itemCode = itemCode;
         this.description = description;
         this.status = status;
-        this.categoryId = categoryId;
+        this.category = category;
         this.barcode = barcode;
     }
 
-    public ItemDTO(int itemCode, String description, String billDescription, String status, int categoryId, double regularPrice, String barcode) {
+    public ItemDTO(int itemCode, String description, String billDescription, String status, CategoryDTO category, double regularPrice, String barcode) {
         this.itemCode = itemCode;
         this.description = description;
         this.billDescription = billDescription;
         this.status = status;
-        this.categoryId = categoryId;
+        this.category = category;
         this.regularPrice = regularPrice;
         this.barcode = barcode;
     }
@@ -80,11 +80,12 @@ public class ItemDTO {
         this.status = status;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public CategoryDTO getCategory() {
+        return category;
     }
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+
+    public void setCategory(CategoryDTO category) {
+        this.category = category;
     }
 
     public double getRegularPrice() {
@@ -108,7 +109,7 @@ public class ItemDTO {
                 ", description='" + description + '\'' +
                 ", billDescription='" + billDescription + '\'' +
                 ", status='" + status + '\'' +
-                ", categoryId=" + categoryId +
+                ", category=" + category +
                 ", regularPrice=" + regularPrice +
                 ", barcode='" + barcode + '\'' +
                 '}';

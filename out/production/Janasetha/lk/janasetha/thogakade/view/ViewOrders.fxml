@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="900.0" prefWidth="1683.0"
+            stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/10.0.1"
+            fx:controller="lk.janasetha.thogakade.controller.ViewOrdersController">
+    <children>
+        <Label layoutX="28.0" layoutY="24.0" prefHeight="46.0" prefWidth="158.0" text="View Order">
+            <font>
+                <Font name="System Bold" size="27.0"/>
+            </font>
+        </Label>
+        <TableView fx:id="tblOrder" layoutX="59.0" layoutY="105.0" prefHeight="242.0" prefWidth="1131.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="No"/>
+                <TableColumn prefWidth="204.80003356933594" text="Bill No"/>
+                <TableColumn prefWidth="159.7333984375" text="Date"/>
+                <TableColumn prefWidth="172.26666259765625" text="Time"/>
+                <TableColumn prefWidth="230.66668701171875" text="Sale Type"/>
+                <TableColumn prefWidth="217.3333740234375" text="Total"/>
+            </columns>
+            <styleClass>
+                <String fx:value="column-header-background"/>
+                <String fx:value="table-view"/>
+            </styleClass>
+        </TableView>
+        <TableView fx:id="tblOrderDetails" layoutX="59.0" layoutY="425.0" prefHeight="367.0" prefWidth="1126.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="No"/>
+                <TableColumn prefWidth="137.6000213623047" text="Item No"/>
+                <TableColumn prefWidth="429.60003662109375" text="Item Description"/>
+                <TableColumn minWidth="4.00006103515625" prefWidth="108.7999267578125" text="Qty"/>
+                <TableColumn prefWidth="182.13330078125" text="Unit Price"/>
+                <TableColumn prefWidth="185.60015869140625" text="Amount"/>
+            </columns>
+            <styleClass>
+                <String fx:value="column-header-background"/>
+                <String fx:value="table-view"/>
+            </styleClass>
+        </TableView>
+        <TextField fx:id="txtBillNo" layoutX="251.0" layoutY="30.0" onAction="#txtBillNoAction" prefHeight="35.0"
+                   prefWidth="283.0" promptText="Enter Bill No"/>
+        <JFXButton fx:id="btnSearch" layoutX="573.0" layoutY="29.0" onAction="#btnSearchAction" prefHeight="35.0"
+                   prefWidth="109.0" text="Search">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXButton>
+    </children>
+</AnchorPane>
