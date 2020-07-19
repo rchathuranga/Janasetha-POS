@@ -5,6 +5,7 @@ import lk.janasetha.thogakade.repository.CrudUtil;
 import lk.janasetha.thogakade.repository.custom.BatchDAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,56 @@ public class BatchDAOImpl implements BatchDAO {
         }
 
         if (batches.isEmpty()) batches = null;
+        return batches;
+    }
+
+    @Override
+    public List<Batch> getBatchesByDate(Date date) throws Exception {
+        sql = "SELECT * FROM batch where date=?";
+
+        List<Batch> batches = new ArrayList<>();
+
+        ResultSet rst = CrudUtil.executeQuery(sql, date);
+
+        while (rst.next()) {
+            Batch batch = new Batch();
+
+            batch.setDate(rst.getDate("date"));
+            batch.setBatchId(rst.getInt("batch_id"));
+            batch.setInvoiceNo(rst.getString("invoice_no"));
+            batch.setSupplier(rst.getString("supplier"));
+            batch.setBillTotal(rst.getDouble("bill_total"));
+            batch.setStatus(rst.getString("status"));
+            batch.setTime(rst.getTime("time"));
+
+            batches.add(batch);
+        }
+
+        return batches;
+    }
+
+    @Override
+    public List<Batch> getBatchesForView() throws Exception {
+        sql = "SELECT * FROM batch ORDER BY date DESC LIMIT 20;";
+
+        List<Batch> batches = new ArrayList<>();
+
+        ResultSet rst = CrudUtil.executeQuery(sql);
+
+        while (rst.next()) {
+            Batch batch = new Batch();
+
+            batch.setDate(rst.getDate("date"));
+            batch.setBatchId(rst.getInt("batch_id"));
+            batch.setInvoiceNo(rst.getString("invoice_no"));
+            batch.setSupplier(rst.getString("supplier"));
+            batch.setBillTotal(rst.getDouble("bill_total"));
+            batch.setStatus(rst.getString("status"));
+            batch.setTime(rst.getTime("time"));
+
+            batches.add(batch);
+        }
+
         return batches;
     }
 }

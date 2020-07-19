@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lk.janasetha.thogakade.controller.SettingsController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="900.0" prefWidth="1683.0"
+            stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/10.0.1"
+            fx:controller="lk.janasetha.thogakade.controller.SettingsController">
+    <children>
+        <AnchorPane layoutX="48.0" layoutY="77.0" prefHeight="455.0" prefWidth="705.0"
+                    style="-fx-border-color: black; -fx-border-radius: 3;">
+            <children>
+                <Label layoutX="31.0" layoutY="19.0" text="Category Management">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="28.0" layoutY="78.0" prefHeight="24.0" prefWidth="290.0" text="Description"/>
+                <TextField fx:id="txtCategory" layoutX="27.0" layoutY="106.0" onAction="#txtCategoryAction"
+                           prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;"
+                           styleClass="mytext-field">
+                    <font>
+                        <Font size="15.0"/>
+                    </font>
+                </TextField>
+                <ComboBox fx:id="cmbStatus" layoutX="27.0" layoutY="186.0" onAction="#cmbStatus" prefHeight="40.0"
+                          prefWidth="290.0"/>
+                <Label layoutX="28.0" layoutY="159.0" prefHeight="24.0" prefWidth="290.0" text="Status"/>
+                <TableView fx:id="tblCategory" layoutX="363.0" layoutY="69.0" onMouseClicked="#tblCategoryClickEvent"
+                           prefHeight="369.0" prefWidth="322.0">
+                    <columns>
+                        <TableColumn prefWidth="64.0" text="No"/>
+                        <TableColumn prefWidth="162.4000244140625" text="Category"/>
+                        <TableColumn prefWidth="83.2000732421875" text="Status"/>
+                    </columns>
+                </TableView>
+                <TextField fx:id="txtSearchCategory" layoutX="363.0" layoutY="16.0" onAction="#txtSearchCategory"
+                           prefHeight="32.0" prefWidth="322.0" promptText="Search Category"
+                           style="-fx-border-color: #1FFFB9;" styleClass="mytext-field">
+                    <font>
+                        <Font size="15.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="btnUpdate" layoutX="225.0" layoutY="255.0" mnemonicParsing="false"
+                        onAction="#btnUpdateAction" prefHeight="40.0" prefWidth="90.0" text="Update"/>
+                <Button fx:id="btnAdd" layoutX="125.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnAddAction"
+                        prefHeight="40.0" prefWidth="90.0" text="Add"/>
+            </children>
+        </AnchorPane>
+        <Label layoutX="28.0" layoutY="24.0" prefHeight="46.0" prefWidth="158.0" text="Settings">
+            <font>
+                <Font name="System Bold" size="27.0"/>
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

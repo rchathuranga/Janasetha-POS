@@ -9,6 +9,7 @@ import lk.janasetha.thogakade.model.Item;
 import lk.janasetha.thogakade.repository.DAOFactory;
 import lk.janasetha.thogakade.repository.custom.*;
 import lk.janasetha.thogakade.service.custom.StockService;
+import lk.janasetha.thogakade.utill.SysConfig;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class StockServiceImpl implements StockService {
             for (BatchDetail batchDetail : allBatchDetails) {
                 Item search = itemDAO.search(batchDetail.getItemCode());
 
-                Category category = categoryDAO.search(search.getCategoryId());
+                Category category = categoryDAO.searchByCateIdAndStatus(search.getCategoryId(), SysConfig.STATUS_ACTIVE);
                 CategoryDTO categoryDTO = new CategoryDTO();
                 categoryDTO.setCateId(category.getCateId());
                 categoryDTO.setDescription(category.getDescription());
@@ -143,7 +144,7 @@ public class StockServiceImpl implements StockService {
             for (Item item : all) {
                 ItemDTO itemDTO = new ItemDTO();
 
-                Category category = categoryDAO.search(item.getCategoryId());
+                Category category = categoryDAO.searchByCateIdAndStatus(item.getCategoryId(), SysConfig.STATUS_ACTIVE);
                 CategoryDTO categoryDTO = new CategoryDTO();
                 categoryDTO.setCateId(category.getCateId());
                 categoryDTO.setDescription(category.getDescription());
@@ -166,8 +167,6 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<ItemDTO> getAllItemsByBarcode(String barcode) throws Exception {
-        Connection connection = DBConnection.getInstance().getConnection();
-
         List<Item> all = itemDAO.getAllItemsByBarcode(barcode);
         ArrayList<ItemDTO> returnList = new ArrayList<>();
 
@@ -175,7 +174,7 @@ public class StockServiceImpl implements StockService {
             for (Item item : all) {
                 ItemDTO itemDTO = new ItemDTO();
 
-                Category category = categoryDAO.search(item.getCategoryId());
+                Category category = categoryDAO.searchByCateIdAndStatus(item.getCategoryId(), SysConfig.STATUS_ACTIVE);
                 CategoryDTO categoryDTO = new CategoryDTO();
                 categoryDTO.setCateId(category.getCateId());
                 categoryDTO.setDescription(category.getDescription());
@@ -198,8 +197,6 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<ItemDTO> getAllItemsByDescription(String description) throws Exception {
-        Connection connection = DBConnection.getInstance().getConnection();
-
         List<Item> all = itemDAO.getAllItemsByDescription(description);
         ArrayList<ItemDTO> returnList = new ArrayList<>();
 
@@ -207,7 +204,7 @@ public class StockServiceImpl implements StockService {
             for (Item item : all) {
                 ItemDTO itemDTO = new ItemDTO();
 
-                Category category = categoryDAO.search(item.getCategoryId());
+                Category category = categoryDAO.searchByCateIdAndStatus(item.getCategoryId(), SysConfig.STATUS_ACTIVE);
                 CategoryDTO categoryDTO = new CategoryDTO();
                 categoryDTO.setCateId(category.getCateId());
                 categoryDTO.setDescription(category.getDescription());

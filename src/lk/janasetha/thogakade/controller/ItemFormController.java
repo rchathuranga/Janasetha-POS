@@ -95,17 +95,19 @@ public class ItemFormController {
         createdEvent();
         initializedComponent();
 
-        try {
-            List<ItemDTO> allItems = stockService.getAllItems();
-            tblItems.setItems(FXCollections.observableArrayList(allItems));
+        new Thread(() -> {
+            try {
+                List<ItemDTO> allItems = stockService.getAllItems();
+                tblItems.setItems(FXCollections.observableArrayList(allItems));
 
-            List<CategoryDTO> categories = categoryService.getAllActiveCategories();
-            cmbCategory.setItems(FXCollections.observableList(categories));
-            cmbCategory.getSelectionModel().selectFirst();
+                List<CategoryDTO> categories = categoryService.getAllActiveCategories();
+                cmbCategory.setItems(FXCollections.observableList(categories));
+                cmbCategory.getSelectionModel().selectFirst();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
 
     }
@@ -351,6 +353,8 @@ public class ItemFormController {
 
         txtQty.setText("1");
         txtQty.setPromptText("");
+
+        cmbCategory.getSelectionModel().selectFirst();
     }
 
     @FXML

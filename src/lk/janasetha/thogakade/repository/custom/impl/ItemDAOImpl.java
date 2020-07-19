@@ -131,4 +131,23 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return itemList;
     }
+
+    @Override
+    public Item getItemByBatchDetailId(int batchDetailId) throws Exception {
+        sql = "SELECT * from item i, batch_details bd where bd.item_code=i.item_code && bd.bid_id=?";
+
+        ResultSet rst = CrudUtil.executeQuery(sql, batchDetailId);
+        Item item = new Item();
+        if (rst.next()) {
+            item.setItemCode(rst.getInt("item_code"));
+            item.setDescription(rst.getString("description"));
+            item.setBillDescription(rst.getString("bill_description"));
+            item.setStatus(rst.getString("status"));
+            item.setRegularPrice(rst.getDouble("regular_price"));
+            item.setCategoryId(rst.getInt("cate_id"));
+            item.setBarcode(rst.getString("barcode"));
+        }
+
+        return item;
+    }
 }

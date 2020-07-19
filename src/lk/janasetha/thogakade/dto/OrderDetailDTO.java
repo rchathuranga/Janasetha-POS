@@ -7,6 +7,9 @@ public class OrderDetailDTO {
     private double unitPrice;
     private double total;
 
+    public OrderDetailDTO() {
+    }
+
     public OrderDetailDTO(BatchDetailDTO batchDetailDTO, int qty, double unitPrice, double total) {
         this.batchDetailDTO = batchDetailDTO;
         this.qty = qty;

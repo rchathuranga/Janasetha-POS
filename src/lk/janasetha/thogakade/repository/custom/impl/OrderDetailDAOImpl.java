@@ -1,12 +1,13 @@
 package lk.janasetha.thogakade.repository.custom.impl;
 
+import lk.janasetha.thogakade.model.OrderDetails;
 import lk.janasetha.thogakade.repository.CrudUtil;
 import lk.janasetha.thogakade.repository.custom.OrderDetailDAO;
-import lk.janasetha.thogakade.model.OrderDetails;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
@@ -66,5 +67,27 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
             return lastAddId;
         }
         return -1;
+    }
+
+    @Override
+    public List<OrderDetails> getOrderDetailsByOrderId(int orderId) throws Exception {
+        List<OrderDetails> detailsList = new ArrayList<>();
+        sql = "Select * from order_details where order_id=?";
+
+        ResultSet rst = CrudUtil.executeQuery(sql, orderId);
+        while (rst.next()) {
+            OrderDetails orderDetails = new OrderDetails();
+
+            orderDetails.setId(rst.getInt("id"));
+            orderDetails.setOrderId(rst.getInt("order_id"));
+            orderDetails.setBatchItemId(rst.getInt("batch_item_id"));
+            orderDetails.setQty(rst.getInt("qty"));
+            orderDetails.setUnitPrice(rst.getDouble("unit_price"));
+            orderDetails.setTotal(rst.getDouble("total"));
+
+            detailsList.add(orderDetails);
+        }
+
+        return detailsList;
     }
 }

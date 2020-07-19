@@ -1,27 +1,26 @@
 package lk.janasetha.thogakade.service.custom.impl;
 
-import lk.janasetha.thogakade.dto.QueryDTO;
-import lk.janasetha.thogakade.model.Payment;
-import lk.janasetha.thogakade.repository.custom.*;
-import lk.janasetha.thogakade.service.custom.OrderService;
-import lk.janasetha.thogakade.repository.DAOFactory;
 import lk.janasetha.thogakade.db.DBConnection;
-import lk.janasetha.thogakade.dto.CompleteOrderDTO;
-import lk.janasetha.thogakade.dto.OrderDTO;
-import lk.janasetha.thogakade.dto.OrderDetailDTO;
+import lk.janasetha.thogakade.dto.*;
 import lk.janasetha.thogakade.exception.OutOfStockException;
-import lk.janasetha.thogakade.model.BatchDetail;
+import lk.janasetha.thogakade.model.Item;
 import lk.janasetha.thogakade.model.Order;
 import lk.janasetha.thogakade.model.OrderDetails;
+import lk.janasetha.thogakade.model.Payment;
+import lk.janasetha.thogakade.repository.DAOFactory;
+import lk.janasetha.thogakade.repository.custom.*;
+import lk.janasetha.thogakade.service.custom.OrderService;
 import lk.janasetha.thogakade.utill.SysConfig;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.ORDERS);
+    private final ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.ITEM);
     private final OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.ORDERDETAIL);
     private final BatchDetailDAO batchDetailDAO = (BatchDetailDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.BATCHDETAIL);
     private final QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.QUERY);
@@ -144,5 +143,91 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<QueryDTO> getItem_List() {
         return item_List;
+    }
+
+    @Override
+    public List<OrderDTO> getOrders() throws Exception {
+        List<Order> all = orderDAO.getAll();
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+
+        for (Order order : all) {
+            OrderDTO orderDTO = new OrderDTO();
+
+            orderDTO.setOrderId(order.getOrderId());
+            orderDTO.setBillNo(order.getBillNo());
+            orderDTO.setDate(order.getDate());
+            orderDTO.setTime(order.getTime());
+            orderDTO.setPaymentCompleted(order.isPaymentCompleted());
+            orderDTO.setSalesType(order.getSaleType());
+            orderDTO.setTotal(order.getTotal());
+
+            orderDTOS.add(orderDTO);
+        }
+        return orderDTOS;
+    }
+
+    @Override
+    public List<OrderDetailDTO> getOrderDetailByOrderId(int orderId) throws Exception {
+        List<OrderDetails> orderDetailsList = orderDetailDAO.getOrderDetailsByOrderId(orderId);
+        List<OrderDetailDTO> orderDetailDTOList = new ArrayList<>();
+
+        for (OrderDetails od : orderDetailsList) {
+            OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+
+            orderDetailDTO.setId(od.getId());
+            orderDetailDTO.setQty(od.getQty());
+
+
+            Item item = itemDAO.getItemByBatchDetailId(od.getBatchItemId());
+            ItemDTO itemDTO = new ItemDTO();
+            itemDTO.setItemCode(item.getItemCode());
+            itemDTO.setDescription(item.getDescription());
+            itemDTO.setBillDescription(item.getBillDescription());
+            itemDTO.setItemCode(item.getItemCode());
+            BatchDetailDTO batchDetailDTO = new BatchDetailDTO(od.getBatchItemId(), itemDTO);
+
+            orderDetailDTO.setBatchDetailDTO(batchDetailDTO);
+
+            orderDetailDTO.setUnitPrice(od.getUnitPrice());
+            orderDetailDTO.setTotal(od.getTotal());
+
+            orderDetailDTOList.add(orderDetailDTO);
+        }
+
+        return orderDetailDTOList;
+    }
+
+    @Override
+    public OrderDTO searchOrder(int orderId) throws Exception {
+        Order search = orderDAO.search(orderId);
+        OrderDTO orderDTO = new OrderDTO();
+
+        orderDTO.setOrderId(search.getOrderId());
+        orderDTO.setBillNo(search.getBillNo());
+        orderDTO.setDate(search.getDate());
+        orderDTO.setTime(search.getTime());
+        orderDTO.setSalesType(search.getSaleType());
+        orderDTO.setTotal(search.getTotal());
+
+        return orderDTO;
+    }
+
+    @Override
+    public List<OrderDTO> getOrdersByDate(Date date) throws Exception {
+        List<Order> searchList = orderDAO.getOrdersByDate(date);
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+        for (Order order : searchList) {
+            OrderDTO orderDTO = new OrderDTO();
+
+            orderDTO.setOrderId(order.getOrderId());
+            orderDTO.setBillNo(order.getBillNo());
+            orderDTO.setDate(order.getDate());
+            orderDTO.setTime(order.getTime());
+            orderDTO.setSalesType(order.getSaleType());
+            orderDTO.setTotal(order.getTotal());
+
+            orderDTOList.add(orderDTO);
+        }
+        return orderDTOList;
     }
 }

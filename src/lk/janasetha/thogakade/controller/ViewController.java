@@ -13,25 +13,18 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ViewController {
-
     @FXML
     private BorderPane border;
-
     @FXML
     private JFXButton btnHome;
-
     @FXML
     private JFXButton btnPlaceOrder;
-
     @FXML
     private JFXButton btnManageItem;
-
     @FXML
     private JFXButton btnSettings;
-
     @FXML
     private JFXButton btnLogout;
-
     @FXML
     private AnchorPane window;
 
@@ -70,8 +63,6 @@ public class ViewController {
         viewMap.put("btnHome", "Dashboard");
         viewMap.put("btnModifyBatch", "ModifyBatch");
         viewMap.put("btnViewOrders", "ViewOrders");
-
-
     }
 
 

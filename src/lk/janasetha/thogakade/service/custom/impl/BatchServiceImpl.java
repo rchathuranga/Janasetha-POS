@@ -1,6 +1,5 @@
 package lk.janasetha.thogakade.service.custom.impl;
 
-import lk.janasetha.thogakade.db.DBConnection;
 import lk.janasetha.thogakade.dto.BatchDTO;
 import lk.janasetha.thogakade.dto.BatchDetailDTO;
 import lk.janasetha.thogakade.dto.CategoryDTO;
@@ -15,8 +14,9 @@ import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
 import lk.janasetha.thogakade.repository.custom.CategoryDAO;
 import lk.janasetha.thogakade.repository.custom.ItemDAO;
 import lk.janasetha.thogakade.service.custom.BatchService;
+import lk.janasetha.thogakade.utill.SysConfig;
 
-import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +29,14 @@ public class BatchServiceImpl implements BatchService {
 
     @Override
     public List<BatchDTO> getAllBatch() throws Exception {
-        Connection connection = DBConnection.getInstance().getConnection();
+        List<Batch> all = batchDAO.getBatchesForView();
+        return getReturnableData(all);
+    }
 
-        List<Batch> all = batchDAO.getAll();
+    private List<BatchDTO> getReturnableData(List<Batch> batches) throws Exception {
         List<BatchDTO> ret = new ArrayList<>();
 
-        for (Batch batch : all) {
+        for (Batch batch : batches) {
             BatchDTO batchDTO = new BatchDTO(batch.getBatchId(), batch.getSupplier(), batch.getDate(), batch.getTime(), batch.getStatus(), batch.getInvoiceNo(), batch.getBillTotal());
             List<BatchDetail> batchDetails = batchDetailDAO.getAllByBatchId(batch.getBatchId());
             List<BatchDetailDTO> batchDetailDTOS = new ArrayList<>();
@@ -44,7 +46,7 @@ public class BatchServiceImpl implements BatchService {
 
                 ItemDTO itemDTO = null;
                 if(search!=null){
-                    Category category = categoryDAO.search(search.getCategoryId());
+                    Category category = categoryDAO.searchByCateIdAndStatus(search.getCategoryId(), SysConfig.STATUS_ACTIVE);
                     CategoryDTO categoryDTO = new CategoryDTO();
                     categoryDTO.setCateId(category.getCateId());
                     categoryDTO.setDescription(category.getDescription());
@@ -60,7 +62,14 @@ public class BatchServiceImpl implements BatchService {
 
             ret.add(batchDTO);
         }
-
         return ret;
     }
+
+    @Override
+    public List<BatchDTO> getAllBatchByDate(Date date) throws Exception {
+        List<Batch> batches = batchDAO.getBatchesByDate(date);
+        return getReturnableData(batches);
+    }
+
+
 }
