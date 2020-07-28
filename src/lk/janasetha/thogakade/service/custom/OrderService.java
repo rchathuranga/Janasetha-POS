@@ -12,7 +12,9 @@ import java.util.List;
 public interface OrderService extends SuperService {
 
     public int addOrder(CompleteOrderDTO order) throws Exception;
+
     public void cancelOrder(int OrderId) throws Exception;
+
     public List<QueryDTO> getItem_List();
 
     public List<OrderDTO> getOrders() throws Exception;

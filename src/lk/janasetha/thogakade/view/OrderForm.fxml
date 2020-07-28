@@ -11,7 +11,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="900.0" prefWidth="1683.0" style="-fx-background-color: #fff;"
             stylesheets="@../assets/style/style.css" xmlns="http://javafx.com/javafx/10.0.1"
-            fx:controller="lk.janasetha.thogakade.controller.OrderFormControllerX">
+            fx:controller="lk.janasetha.thogakade.controller.OrderFormController">
    <children>
       <Label layoutX="18.0" layoutY="14.0" prefHeight="46.0" prefWidth="158.0" text="Order Form">
          <font>
@@ -36,14 +36,14 @@
                      <Font size="17.0"/>
                  </font>
              </TextField>
-            <TableView fx:id="tblItems" layoutX="21.0" layoutY="117.0" onKeyReleased="#tblListKeyEvent" onMouseClicked="#tblListClickEvent" prefHeight="190.0" prefWidth="700.0" stylesheets="@../assets/style/style.css">
+             <TableView fx:id="tblItems" layoutX="21.0" layoutY="117.0" onKeyReleased="#tblItemKeyEvent"
+                        onMouseClicked="#tblItemClickEvent" prefHeight="190.0" prefWidth="700.0"
+                        stylesheets="@../assets/style/style.css">
               <columns>
                 <TableColumn prefWidth="40.799964904785156" styleClass="center" text="No" />
-                <TableColumn prefWidth="246.66657257080078" text="Description" />
-                  <TableColumn prefWidth="60.0" styleClass="center" text="Qty" />
-                  <TableColumn prefWidth="107.73324584960938" styleClass="center" text="Retail" />
-                  <TableColumn prefWidth="100.79998779296875" styleClass="center" text="Mid" />
-                  <TableColumn prefWidth="102.666748046875" styleClass="center" text="Wholesale" />
+                  <TableColumn prefWidth="410.40003204345703" text="Description"/>
+                  <TableColumn prefWidth="80.79998779296875" styleClass="center" text="Qty"/>
+                  <TableColumn prefWidth="151.199951171875" styleClass="center" text="Retail Price"/>
               </columns>
             </TableView>
          </children>
@@ -88,9 +88,10 @@
                <font>
                   <Font name="Roboto Black" size="20.0" />
                </font></TextField>
-            <JFXButton fx:id="btnAddToList" layoutX="373.0" layoutY="208.0" onAction="#btnAddToListAction" prefHeight="85.0" prefWidth="251.0" style="-fx-background-color: #73FFD3;" text="Add To List">
+             <JFXButton fx:id="btnAddToList" layoutX="373.0" layoutY="208.0" onAction="#btnAddToListAction"
+                        prefHeight="85.0" prefWidth="251.0" style="-fx-background-color: #73FFD3;" text="Add to List">
                <font>
-                  <Font name="Roboto Regular" size="20.0" />
+                   <Font name="Roboto Regular" size="24.0"/>
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />

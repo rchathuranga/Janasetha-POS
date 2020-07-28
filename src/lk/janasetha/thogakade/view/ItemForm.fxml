@@ -86,16 +86,18 @@
                   <Insets left="50.0" />
                </padding>
             </TextField>
-            <Label layoutX="351.0" layoutY="94.0" prefHeight="24.0" prefWidth="290.0" text="Manu Date" />
-            <DatePicker fx:id="dtpManuDate" layoutX="352.0" layoutY="121.0" prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;" />
-            <Label layoutX="354.0" layoutY="176.0" prefHeight="24.0" prefWidth="286.0" text="Expire Date" />
-            <DatePicker fx:id="dtpExDate" layoutX="352.0" layoutY="204.0" prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;" />
-            <Label layoutX="354.0" layoutY="16.0" prefHeight="24.0" prefWidth="289.0" text="Qty" />
             <TextField fx:id="txtQty" alignment="CENTER" layoutX="353.0" layoutY="43.0" onAction="#txtQtyActionEvent" prefHeight="40.0" prefWidth="290.0" style="-fx-border-color: #1FFFB9;" text="1">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </TextField>
+             <Label layoutX="354.0" layoutY="16.0" prefHeight="24.0" prefWidth="289.0" text="Qty"/>
+             <Label layoutX="351.0" layoutY="94.0" prefHeight="24.0" prefWidth="290.0" text="Manu Date"/>
+             <DatePicker fx:id="dtpManuDate" layoutX="352.0" layoutY="121.0" prefHeight="40.0" prefWidth="290.0"
+                         style="-fx-border-color: #1FFFB9;"/>
+             <Label layoutX="354.0" layoutY="176.0" prefHeight="24.0" prefWidth="286.0" text="Expire Date"/>
+             <DatePicker fx:id="dtpExDate" layoutX="352.0" layoutY="204.0" prefHeight="40.0" prefWidth="290.0"
+                         style="-fx-border-color: #1FFFB9;"/>
              <JFXButton fx:id="btnAddToList" buttonType="RAISED" layoutX="430.0" layoutY="440.0"
                         onAction="#btnAddToListAction" prefHeight="55.0" prefWidth="218.0"
                         style="-fx-background-color: #73FFD3;" text="ADD">

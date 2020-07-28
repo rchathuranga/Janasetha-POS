@@ -33,7 +33,7 @@ public class ViewController {
     private static final String path = "/lk/janasetha/thogakade/view/";
     private static final String extension = ".fxml";
 
-    private static Parent btnPlaceOrderUI;
+    private Parent btnPlaceOrderUI;
 
     public void initialize() {
         String tabView = path + "tabView" + extension;
@@ -86,7 +86,7 @@ public class ViewController {
         if (clickedBtn.getId().equals("btnPlaceOrder")) {
 
             if (btnPlaceOrderUI == null) {
-                btnPlaceOrderUI = FXMLLoader.load(getClass().getResource(path + "tabView" + extension));
+                btnPlaceOrderUI = FXMLLoader.load(getClass().getResource(path + "TabView" + extension));
                 root = btnPlaceOrderUI;
             } else {
                 root = btnPlaceOrderUI;

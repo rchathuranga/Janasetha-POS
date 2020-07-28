@@ -1,15 +1,15 @@
 package lk.janasetha.thogakade.service.custom;
 
-import lk.janasetha.thogakade.dto.ItemDTO;
-import lk.janasetha.thogakade.service.SuperService;
 import lk.janasetha.thogakade.dto.CompleteStockDTO;
+import lk.janasetha.thogakade.dto.ItemDTO;
 import lk.janasetha.thogakade.dto.QueryDTO;
+import lk.janasetha.thogakade.service.SuperService;
 
 import java.util.List;
 
 public interface StockService extends SuperService {
 
-    public int addNewStock(CompleteStockDTO stockDTO) throws Exception;
+    public boolean addNewStock(CompleteStockDTO stockDTO) throws Exception;
 
     public List<CompleteStockDTO> getAllStockDetails() throws Exception;
 

@@ -24,7 +24,7 @@ public class StockServiceImpl implements StockService {
     private final QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDao(DAOFactory.DAOTypes.QUERY);
 
     @Override
-    public int addNewStock(CompleteStockDTO stockDTO) throws Exception {
+    public boolean addNewStock(CompleteStockDTO stockDTO) throws Exception {
         Connection connection = DBConnection.getInstance().getConnection();
         connection.setAutoCommit(false);
 
@@ -79,7 +79,7 @@ public class StockServiceImpl implements StockService {
         connection.rollback();
 
         connection.setAutoCommit(true);
-        return 0;
+        return processSuccess;
     }
 
     @Override

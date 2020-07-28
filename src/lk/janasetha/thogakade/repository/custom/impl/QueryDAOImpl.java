@@ -1,10 +1,9 @@
 package lk.janasetha.thogakade.repository.custom.impl;
 
+import lk.janasetha.thogakade.dto.QueryDTO;
 import lk.janasetha.thogakade.repository.CrudUtil;
 import lk.janasetha.thogakade.repository.custom.QueryDAO;
-import lk.janasetha.thogakade.dto.QueryDTO;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class QueryDAOImpl implements QueryDAO {
             queryDTO.setRetailPrice(rst.getDouble("retail_price"));
             queryDTO.setMidPrice(rst.getDouble("mid_price"));
             queryDTO.setWholesalePrice(rst.getDouble("wholesale_price"));
-            queryDTO.setBilDescription(rst.getString("bill_description"));
+            queryDTO.setBillDescription(rst.getString("bill_description"));
 
             queryDTOList.add(queryDTO);
         }
@@ -55,7 +54,7 @@ public class QueryDAOImpl implements QueryDAO {
             queryDTO.setRetailPrice(rst.getDouble("retail_price"));
             queryDTO.setMidPrice(rst.getDouble("mid_price"));
             queryDTO.setWholesalePrice(rst.getDouble("wholesale_price"));
-            queryDTO.setBilDescription(rst.getString("bill_description"));
+            queryDTO.setBillDescription(rst.getString("bill_description"));
 
             queryDTOList.add(queryDTO);
         }
@@ -81,7 +80,7 @@ public class QueryDAOImpl implements QueryDAO {
             queryDTO.setRetailPrice(rst.getDouble("retail_price"));
             queryDTO.setMidPrice(rst.getDouble("mid_price"));
             queryDTO.setWholesalePrice(rst.getDouble("wholesale_price"));
-            queryDTO.setBilDescription(rst.getString("bill_description"));
+            queryDTO.setBillDescription(rst.getString("bill_description"));
 
             queryDTOList.add(queryDTO);
         }
@@ -115,7 +114,7 @@ public class QueryDAOImpl implements QueryDAO {
             queryDTO.setRetailPrice(rst.getDouble("retail_price"));
             queryDTO.setMidPrice(rst.getDouble("mid_price"));
             queryDTO.setWholesalePrice(rst.getDouble("wholesale_price"));
-            queryDTO.setBilDescription(rst.getString("bill_description"));
+            queryDTO.setBillDescription(rst.getString("bill_description"));
 
             queryDTOList.add(queryDTO);
         }
@@ -145,7 +144,7 @@ public class QueryDAOImpl implements QueryDAO {
             queryDTO.setMidPrice(rst.getDouble("mid_price"));
             queryDTO.setBuyingPrice(rst.getDouble("buying_price"));
             queryDTO.setWholesalePrice(rst.getDouble("wholesale_price"));
-            queryDTO.setBilDescription(rst.getString("bill_description"));
+            queryDTO.setBillDescription(rst.getString("bill_description"));
 
             queryDTOList.add(queryDTO);
         }

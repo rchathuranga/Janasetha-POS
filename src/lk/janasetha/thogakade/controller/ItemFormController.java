@@ -12,7 +12,9 @@ import lk.janasetha.thogakade.dto.*;
 import lk.janasetha.thogakade.service.ServiceFactory;
 import lk.janasetha.thogakade.service.custom.CategoryService;
 import lk.janasetha.thogakade.service.custom.StockService;
+import lk.janasetha.thogakade.service.custom.SupplierService;
 import lk.janasetha.thogakade.tm.BatchDetailTM;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -65,9 +67,10 @@ public class ItemFormController {
     @FXML
     private JFXButton btnClearFields;
 
-
     private StockService stockService = (StockService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.STOCK);
     private CategoryService categoryService = (CategoryService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.CATEGORY);
+    private SupplierService supplierService = (SupplierService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.SUPPLIER);
+
 
     private ItemDTO selectedItem = null;
     private QueryDTO selectedQueryItem = null;
@@ -95,8 +98,12 @@ public class ItemFormController {
         createdEvent();
         initializedComponent();
 
-        new Thread(() -> {
+
+//        new Thread(() -> {
             try {
+                List<SupplierDTO> allSuppliers = supplierService.getAllSuppliers();
+                TextFields.bindAutoCompletion(txtSupplier, allSuppliers);
+
                 List<ItemDTO> allItems = stockService.getAllItems();
                 tblItems.setItems(FXCollections.observableArrayList(allItems));
 
@@ -107,7 +114,7 @@ public class ItemFormController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+//        }).start();
 
 
     }
@@ -163,10 +170,13 @@ public class ItemFormController {
             stockDTO.setBatchDetail(batchDetailDTOList);
 
             try {
-//                int i = stockService.addNewStock(stockDTO);
-                System.out.println("00000000000000000000000000000000000000000000");
-//                System.out.println(i);
-                System.out.println("00000000000000000000000000000000000000000000");
+                boolean isStockAdded = stockService.addNewStock(stockDTO);
+                if (isStockAdded) {
+                    new Alert(Alert.AlertType.INFORMATION, "Stocks Added Successfully").show();
+                    btnClearAllAction(null);
+                } else {
+                    new Alert(Alert.AlertType.INFORMATION, "Stocks Added Failed").show();
+                }
 
                 List<ItemDTO> allItems = stockService.getAllItems();
                 tblItems.setItems(FXCollections.observableArrayList(allItems));
@@ -208,17 +218,13 @@ public class ItemFormController {
             buying = selectedQueryItem.getBuyingPrice();
         }
 
-        System.out.println("text : " + selectedItem.getDescription().equals(txtDescription.getText().trim()));
-        System.out.println("bool : " + selectedItem == null || selectedItem.getDescription().equals(txtDescription.getText().trim()));
-
-        if (selectedItem == null | !selectedItem.getDescription().equals(txtDescription.getText().trim())) {
-            System.out.println("Condition Inner");
+        if (selectedItem == null || !selectedItem.getDescription().equals(txtDescription.getText().trim())) {
             if (!txtItemDescription.getText().equals("")) {
 
                 String description = txtItemDescription.getText();
                 String billDescription = txtBillDescription.getText();
 
-                Alert barcodeAlert = new Alert(Alert.AlertType.INFORMATION, "Enter Product Barcode");
+//                Alert barcodeAlert = new Alert(Alert.AlertType.INFORMATION, "Enter Product Barcode");
 //                barcodeAlert.  todo set text field to alert
 
                 selectedItem = new ItemDTO(description, billDescription, "ACT", cmbCategory.getSelectionModel().getSelectedItem(), retail, txtItemBarcode.getText());
@@ -353,6 +359,8 @@ public class ItemFormController {
 
         txtQty.setText("1");
         txtQty.setPromptText("");
+
+        txtItemBarcode.setText("");
 
         cmbCategory.getSelectionModel().selectFirst();
     }

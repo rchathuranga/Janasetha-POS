@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 
         connection.rollback();
         connection.setAutoCommit(true);
-        return -1;
+        return orderId;
     }
 
     private void validatePaymentCompleteness(CompleteOrderDTO completeOrder) {

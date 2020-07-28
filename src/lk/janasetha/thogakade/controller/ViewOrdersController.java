@@ -77,6 +77,18 @@ public class ViewOrdersController {
 
     @FXML
     void btnSearchAction(ActionEvent event) {
+        System.out.println(dtpDate.getValue());
+        boolean byOrderId = !txtBillNo.getText().equalsIgnoreCase("");
+        boolean byDate = dtpDate.getValue() != null;
+
+        if (byOrderId) {
+            searchOrderByOrderIdOrDate(true);
+        } else if (byDate) {
+            searchOrderByOrderIdOrDate(false);
+        } else {
+            // TODO: 7/21/2020 set Alert to enter values
+            System.out.println("Empty");
+        }
 
     }
 

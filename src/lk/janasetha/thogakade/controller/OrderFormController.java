@@ -2,23 +2,33 @@ package lk.janasetha.thogakade.controller;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import lk.janasetha.thogakade.dto.QueryDTO;
+import lk.janasetha.thogakade.dto.*;
+import lk.janasetha.thogakade.reports.Report;
 import lk.janasetha.thogakade.service.ServiceFactory;
 import lk.janasetha.thogakade.service.custom.OrderService;
 import lk.janasetha.thogakade.service.custom.StockService;
-import lk.janasetha.thogakade.tm.ItemTM;
+import lk.janasetha.thogakade.tm.ButtonTM;
 import lk.janasetha.thogakade.utill.SysConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderFormController {
+    /**
+     * =============================== View Component Variable ===============================
+     */
+
     @FXML
     private Button btnTabAdd;
     @FXML
@@ -48,9 +58,9 @@ public class OrderFormController {
     @FXML
     private TextField lblOrderTotal;
     @FXML
-    private TableView<ItemTM> tblItems;
+    private TableView<QueryDTO> tblItems;
     @FXML
-    private TableView<ItemTM> tblList;
+    private TableView<QueryDTO> tblList;
     @FXML
     private TextField txtPayedAmount;
     @FXML
@@ -62,118 +72,20 @@ public class OrderFormController {
     private OrderService orderService = (OrderService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.ORDER);
 
     /**
-     * ===================== =====================
+     * =============================== View Selections ===============================
      */
 
-    private ItemTM selectedItem;
-
-    //Order Common Properties
-    private String orderSalesType;
-
-    //Single Item Properties
-    private double itemUnitPrice;
-    private int itemQty;
-    private double itemTotal;
-
-    /** ===================== =====================  */
+    private OrderDTO orderDTO = new OrderDTO();
+    private QueryDTO selectedItem;
+    private List<QueryDTO> orderItemList = new ArrayList<>();
 
 
     /**
-     * FXML initialize method
+     * =============================== FXML Initialize ===============================
      */
     public void initialize() {
-        try {
-            new Thread(() -> {
-                initializeComponents();
-                txtBarcode.textProperty().addListener((observable, oldValue, newValue) -> {
-                    txtBarcodeChangeEvent(newValue.trim());
-                });
-                txtDescription.textProperty().addListener((observable, oldValue, newValue) -> {
-                    txtSearchChangeEvent(newValue.trim());
-                });
-            }).start();
-            loadTableFromQueryDTO(stockService.getAvailableStock());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void btnAddToListAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void btnCancelOrderAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void btnPlaceOrderAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cmbSalesTypeAction(ActionEvent event) {
-        orderSalesType = cmbSalesType.getSelectionModel().getSelectedItem();
-
-    }
-
-    @FXML
-    void lblRuMouseClick(MouseEvent event) {
-
-    }
-
-    @FXML
-    void tblListClickEvent(MouseEvent event) {
-
-    }
-
-    @FXML
-    void tblListKeyEvent(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtPayedAmountAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtPayedAmountKeyPress(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtQtyAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtQtyKeyPress(KeyEvent event) {
-
-    }
-
-    /** ===================== =====================  */
-
-    private void initializeComponents() {
-        tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("itemCode"));
-        tblItems.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
-        tblItems.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("qty"));
-        tblItems.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-        tblItems.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("midPrice"));
-        tblItems.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("wholesalePrice"));
-
-
-        tblList.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("listNumber"));
-        tblList.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
-        tblList.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("sellingQty"));
-        tblList.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
-        tblList.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("sellingTotal"));
-        tblList.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("removeButton"));
-
-        cmbSalesType.setItems(FXCollections.observableArrayList(SysConfig.SALES_TYPE_RETAIL, SysConfig.SALES_TYPE_MID, SysConfig.SALES_TYPE_WHOLESALE));
-        cmbSalesType.getSelectionModel().selectFirst();
+        initializeComponents();
+        loadAvailableItems();
     }
 
     private void txtBarcodeChangeEvent(String changedValue) {
@@ -184,7 +96,8 @@ public class OrderFormController {
             } else {
                 availableStockByBarcode = stockService.getAvailableStock();
             }
-            loadTableFromQueryDTO(availableStockByBarcode);
+            tblItems.setItems(FXCollections.observableList(availableStockByBarcode));
+            processAfterItemLoaded(availableStockByBarcode);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,98 +111,376 @@ public class OrderFormController {
             } else {
                 availableStockByBarcode = stockService.getAvailableStock();
             }
-            loadTableFromQueryDTO(availableStockByBarcode);
+            tblItems.setItems(FXCollections.observableList(availableStockByBarcode));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    private void tableClickEvent() {
-        this.selectedItem = tblItems.getSelectionModel().getSelectedItem();
-        if (this.selectedItem != null) {
-            setLblItemDescription(this.selectedItem.getBillDescription());
-            lblQtyOnHand.setText(String.valueOf(this.selectedItem.getQty()));
-            lblUnitPrice.setText(String.valueOf(extractSellingPriceBySalesType(selectedItem)));
-            setItemUnitPrice(calculateItemTotal(selectedItem));
-            txtQty.requestFocus();
+    private void processAfterItemLoaded(List<QueryDTO> availableStockByBarcode) {
+        boolean isPreEmpty = tblItems.getItems().isEmpty();
+
+        if (isPreEmpty || availableStockByBarcode.size() == 1) {
+            tblItems.getSelectionModel().selectFirst();
+            itemSelection();
         }
     }
 
-    private double extractSellingPriceBySalesType(ItemTM itemTM) {
-        double price;
-        if (orderSalesType.equalsIgnoreCase(SysConfig.SALES_TYPE_MID)) {
-            price = itemTM.getMidPrice();
-        } else if (orderSalesType.equalsIgnoreCase(SysConfig.SALES_TYPE_WHOLESALE)) {
-            price = itemTM.getWholesalePrice();
-        } else {
-            price = itemTM.getRetailPrice();
-        }
-        return price;
-    }
+    private void initializeComponents() {
+        tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        tblItems.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
+        tblItems.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentQty"));
+        tblItems.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
 
-    private void loadTableFromQueryDTO(List<QueryDTO> list) {
-        List<ItemTM> tableModel = new ArrayList<>();
-        list.forEach(q -> {
-            ItemTM itemTM = new ItemTM();
 
-            itemTM.setItemCode(q.getItemCode());
-            itemTM.setDescription(q.getDescription());
-            itemTM.setBillDescription(q.getBilDescription());
-            itemTM.setQty(q.getCurrentQty());
-            itemTM.setRetailPrice(q.getRetailPrice());
-            itemTM.setMidPrice(q.getMidPrice());
-            itemTM.setWholesalePrice(q.getWholesalePrice());
+        tblList.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("itemCount"));
+        tblList.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
+        tblList.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("sellingQty"));
+        tblList.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
+        tblList.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("sellingTotal"));
+        tblList.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("removeButton"));
 
-            tableModel.add(itemTM);
+
+        txtBarcode.textProperty().addListener((observable, oldValue, newValue) -> {
+            txtBarcodeChangeEvent(newValue.trim());
         });
 
-        boolean isPreEmpty = tblItems.getItems().isEmpty();
-        tblItems.setItems(FXCollections.observableList(tableModel));
+        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> {
+            txtSearchChangeEvent(newValue.trim());
+        });
 
-        //if there is minimum one object in item list
-        if (isPreEmpty || tableModel.size() == 1) {
+
+        cmbSalesType.setItems(FXCollections.observableArrayList(SysConfig.SALES_TYPE_RETAIL, SysConfig.SALES_TYPE_MID, SysConfig.SALES_TYPE_WHOLESALE));
+        cmbSalesType.getSelectionModel().selectFirst();
+
+        tblList.setItems(FXCollections.observableList(orderItemList));
+    }
+
+    public void loadAvailableItems() {
+        try {
+            List<QueryDTO> availableStock = stockService.getAvailableStock();
+            tblItems.setItems(FXCollections.observableArrayList(availableStock));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void itemSelection() {
+        QueryDTO tblItem = tblItems.getSelectionModel().getSelectedItem();
+        if (tblItem != null) {
+            if (tblItem.getCurrentQty() > 0) {
+
+                this.selectedItem = tblItem.clone();
+                setItemDetails();
+                txtQty.requestFocus();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No Items in Stock for this Item").show();
+                txtBarcode.requestFocus();
+            }
+        }
+    }
+
+    private void setItemDetails() {
+        if (selectedItem != null) {
+            lblDescription.setText(selectedItem.getBillDescription().replace(" ", "\n"));
+            lblQtyOnHand.setText(String.valueOf(selectedItem.getCurrentQty()));
+
+            double sellingPrice = extractSellingPriceBySalesType(selectedItem);
+            selectedItem.setSellingPrice(sellingPrice);
+            lblUnitPrice.setText(String.valueOf(sellingPrice));
+
+            processSellingQty();
+            double sellingTotal = sellingPrice * selectedItem.getSellingQty();
+            selectedItem.setSellingTotal(sellingTotal);
+            lblItemTotal.setText(String.valueOf(sellingTotal));
+        }
+    }
+
+    private double extractSellingPriceBySalesType(QueryDTO queryDTO) {
+        String salesType = cmbSalesType.getSelectionModel().getSelectedItem();
+        if (salesType.equalsIgnoreCase(SysConfig.SALES_TYPE_MID)) {
+            return queryDTO.getMidPrice();
+        } else if (salesType.equalsIgnoreCase(SysConfig.SALES_TYPE_WHOLESALE)) {
+            return queryDTO.getWholesalePrice();
+        } else {
+            return queryDTO.getRetailPrice();
+        }
+    }
+
+    private void processSellingQty() {
+        if (selectedItem != null) {
+            String text = txtQty.getText();
+            if (!text.matches("[0-9]{1,5}")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered");
+                alert.show();
+                txtQty.setText("");
+                txtQty.requestFocus();
+                return;
+            }
+            selectedItem.setSellingQty(Integer.parseInt(text));
+        }
+    }
+
+    private void addToListProcess() {
+        if (selectedItem != null) {
+            QueryDTO already = getSelectedItemIfAlreadyOnList(selectedItem);
+            if (already != null) {
+                orderItemList.remove(already);
+            }
+
+            int itemCount = orderItemList.size() + 1;
+            selectedItem.setItemCount(itemCount);
+
+
+            ButtonTM btnRemove = new ButtonTM("Remove");
+            btnRemove.setVisible(true);
+            btnRemove.setOnAction(event1 -> {
+                tblList.getItems().remove(btnRemove.getItem());
+                loopOrderItemList();
+            });
+            selectedItem.setRemoveButton(btnRemove);
+
+
+            orderItemList.add(selectedItem);
+
+            loopOrderItemList();
+            paidAmountEvent();
+            tblList.refresh();
+            txtBarcode.requestFocus();
+
+
+        }
+    }
+
+    private void loopOrderItemList() {
+        int itemCount = 1;
+        double orderTotal = 0.0;
+        QueryDTO temp = selectedItem;
+        for (QueryDTO queryDTO : orderItemList) {
+            selectedItem = queryDTO;
+            queryDTO.setItemCount(itemCount++);
+
+            double sellingPrice = extractSellingPriceBySalesType(selectedItem);
+            double sellingTotal = sellingPrice * selectedItem.getSellingQty();
+            selectedItem.setSellingPrice(sellingPrice);
+            selectedItem.setSellingTotal(sellingTotal);
+
+            orderTotal += queryDTO.getSellingTotal();
+        }
+
+        lblNoOfItems.setText(String.valueOf(orderItemList.size()));
+        orderDTO.setTotal(orderTotal);
+        lblOrderTotal.setText(String.valueOf(orderTotal));
+
+        selectedItem = temp;
+        tblList.refresh();
+    }
+
+    private QueryDTO getSelectedItemIfAlreadyOnList(QueryDTO itemTM) {
+        for (QueryDTO item : tblList.getItems()) {
+            if (item.getItemCode() == itemTM.getItemCode()) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private void paidAmountEvent() {
+        if (orderDTO != null) {
+            String text = txtPayedAmount.getText();
+            if (text.isEmpty()) {
+                txtPayedAmount.requestFocus();
+                orderDTO.setPaidAmount(0);
+                return;
+            }
+
+            if (text.matches("[0-9]*.[0-9]{0,2}")) {
+
+                double paidAmount = Double.parseDouble(text);
+                orderDTO.setPaidAmount(paidAmount);
+                double balance = orderDTO.getPaidAmount() - orderDTO.getTotal();
+                orderDTO.setBalance(balance);
+                if (orderDTO.getPaidAmount() != 0)
+                    lblBalance.setText(String.valueOf(balance));
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered");
+                alert.show();
+                txtPayedAmount.setText("00");
+                txtPayedAmount.requestFocus();
+            }
+        }
+    }
+
+    private void processPlaceOrder() {
+
+        orderDTO.setSalesType(cmbSalesType.getValue());
+        List<OrderDetailDTO> items = new ArrayList<>();
+
+        for (int i = 0; i < tblList.getItems().size(); i++) {
+            QueryDTO itemTM = tblList.getItems().get(i);
+            OrderDetailDTO odDTO = new OrderDetailDTO(new BatchDetailDTO(0, new ItemDTO(itemTM.getItemCode())), itemTM.getSellingQty(), itemTM.getSellingPrice(), itemTM.getSellingTotal());
+            items.add(odDTO);
+        }
+
+        CompleteOrderDTO completeOrderDTO = new CompleteOrderDTO();
+        completeOrderDTO.setOrder(orderDTO);
+        completeOrderDTO.setItems(items);
+
+        try {
+
+            System.out.println("000000000000000000000000  000000000000000000000000");
+            int orderId = orderService.addOrder(completeOrderDTO);
+            if (orderId > 0) {
+                prepareForNewOrder(true);
+                Report.getInstance().generateOrderBillReport(completeOrderDTO, orderItemList);
+
+                System.out.println("000000000000000000000000  000000000000000000000000");
+
+                System.out.println("orderbo-item_list : " + orderService.getItem_List());
+
+                new Alert(Alert.AlertType.INFORMATION, "Order " + orderId + " Placed Successfully").show();
+            } else {
+                System.out.println("Order Failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void prepareForNewOrder(boolean isForceClear /** true - doesn't show alert */) {
+        boolean isButtonClick = false;
+
+        if (!isForceClear) {
+            Optional<ButtonType> buttonType = new Alert(Alert.AlertType.WARNING, "Are You Sure to Cancel Order", ButtonType.OK).showAndWait();
+            isButtonClick = buttonType.isPresent() && buttonType.get().getButtonData().isDefaultButton();
+        }
+
+        if (!isButtonClick) {
+            orderDTO = new OrderDTO();
+
+            orderItemList.clear();
+            tblList.refresh();
+            orderItemList = new ArrayList<>();
+
+            loadAvailableItems();
             tblItems.getSelectionModel().selectFirst();
-            tableClickEvent();
+            itemSelection();
+
+            txtBarcode.setText("");
+            txtDescription.setText("");
+            txtQty.setText("1");
+            lblNoOfItems.setText("0");
+            lblOrderTotal.setText("0.0");
+            txtPayedAmount.setText("0.0");
+            lblBalance.setText("0.0");
+
+            txtBarcode.requestFocus();
         }
     }
 
 
-    private void setItemUnitPrice(double itemUnitPrice) {
-        this.itemUnitPrice = itemUnitPrice;
-        setItemTotal(calculateItemTotal(selectedItem));
-    }
-
-    private double calculateItemTotal(ItemTM selectedItem) {
-        return extractSellingPriceBySalesType(selectedItem) * itemQty;
-    }
-
-    private void setItemTotal(double itemTotal) {
-        this.itemTotal = itemTotal;
-        lblItemTotal.setText(String.valueOf(itemTotal));
-    }
-
     /**
-     * ==================================== Setter for View Management ====================================
-     */
-
-    private void setLblItemDescription(String value) {
-        value = value.replace(" ", "\n");
-        lblDescription.setText(value);
-    }
-
-
-    /**
-     * ==================================== Tab Management ====================================
+     * =============================== FXML Events ===============================
      */
 
     @FXML
-    void btnTabAddAction(ActionEvent event) {
-
+    void tblItemClickEvent(MouseEvent event) {
+        itemSelection();
     }
 
-    @FXML void btnTabRemoveAction(ActionEvent event) {
+    @FXML
+    void tblItemKeyEvent(KeyEvent event) {
+        itemSelection();
+    }
 
+    @FXML
+    void btnAddToListAction(ActionEvent event) {
+        addToListProcess();
+    }
+
+    @FXML
+    void btnCancelOrderAction(ActionEvent event) {
+        prepareForNewOrder(false);
+    }
+
+    @FXML
+    void btnPlaceOrderAction(ActionEvent event) {
+        processPlaceOrder();
+    }
+
+    @FXML
+    void cmbSalesTypeAction(ActionEvent event) {
+        setItemDetails();
+        loopOrderItemList();
+        paidAmountEvent();
+    }
+
+    @FXML
+    void lblRuMouseClick(MouseEvent event) {
+        txtPayedAmount.requestFocus();
+    }
+
+    @FXML
+    void txtPayedAmountAction(ActionEvent event) {
+        paidAmountEvent();
+    }
+
+    @FXML
+    void txtPayedAmountKeyPress(KeyEvent event) {
+        paidAmountEvent();
+    }
+
+    @FXML
+    void txtQtyAction(ActionEvent event) {
+        processSellingQty();
+        setItemDetails();
+        addToListProcess();
+    }
+
+    @FXML
+    void txtQtyKeyPress(KeyEvent event) {
+        String text = txtQty.getText();
+        if (text.equalsIgnoreCase("")) return;
+
+        if (!text.matches("[0-9]{1,5}")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered");
+            alert.show();
+            txtQty.setText("1");
+            txtQty.requestFocus();
+            return;
+        }
+
+        processSellingQty();
+        setItemDetails();
+    }
+
+    @FXML
+    void btnTabAddAction(ActionEvent event) throws IOException {
+        Parent parent = btnTabAdd.getParent().getParent().getParent();
+        TabPane pane = (TabPane) parent;
+
+        ObservableList<Tab> tabs = pane.getTabs();
+        if (tabs.size() < SysConfig.ORDER_FORM_TAB_MAX_LIMIT) {
+            Tab tab = new Tab("Form " + (tabs.size() + 1));
+            tab.setId("tbForm" + (tabs.size() + 1));
+            tab.setContent(parent);
+
+            Parent root = FXMLLoader.load(getClass().getResource("/lk/janasetha/thogakade/view/" + "OrderForm" + ".fxml"));
+            tab.setContent(root);
+
+            tabs.add(tab);
+        }
+    }
+
+    @FXML
+    void btnTabRemoveAction(ActionEvent event) {
+        Parent parent = btnTabAdd.getParent().getParent().getParent();
+        TabPane pane = (TabPane) parent;
+
+        Tab selectedTab = pane.getSelectionModel().getSelectedItem();
+        if (pane.getTabs().size() != 1) {
+            pane.getTabs().remove(selectedTab);
+        }
     }
 }
-

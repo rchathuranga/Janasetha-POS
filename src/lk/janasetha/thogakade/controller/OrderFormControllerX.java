@@ -218,7 +218,7 @@ public class OrderFormControllerX {
                 setBalance();
             });
 
-            selectedItem.setRemoveButton(btnRemove);
+//            selectedItem.setRemoveButton(btnRemove);
             itemTMTableList.add(selectedItem);
 
 
@@ -379,7 +379,7 @@ public class OrderFormControllerX {
         list.forEach(q -> {
             ItemTM itemTM = new ItemTM(q.getItemCode(), q.getDescription(), q.getCurrentQty(), q.getRetailPrice(), q.getMidPrice(), q.getWholesalePrice());
 //            System.out.println(q.getBilDescription());
-            itemTM.setBillDescription(q.getBilDescription());
+            itemTM.setBillDescription(q.getBillDescription());
             tableModel.add(itemTM);
         });
 
@@ -450,7 +450,9 @@ public class OrderFormControllerX {
             try {
 
                 System.out.println("000000000000000000000000  000000000000000000000000");
-                orderBO.addOrder(completeOrderDTO);
+                int orderId = orderBO.addOrder(completeOrderDTO);
+//                Report.getInstance().generateOrderBillReport(completeOrderDTO);
+
                 System.out.println("000000000000000000000000  000000000000000000000000");
 
                 System.out.println("orderbo-item_list : " + orderBO.getItem_List());

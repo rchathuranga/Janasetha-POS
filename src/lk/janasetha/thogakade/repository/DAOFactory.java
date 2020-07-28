@@ -4,34 +4,43 @@ import lk.janasetha.thogakade.repository.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
-    private DAOFactory(){
+
+    private DAOFactory() {
     }
 
-    public static DAOFactory getInstance(){
-        if(daoFactory==null){
-            daoFactory=new DAOFactory();
+    public static DAOFactory getInstance() {
+        if (daoFactory == null) {
+            daoFactory = new DAOFactory();
         }
         return daoFactory;
     }
 
-    public enum DAOTypes{
-        CUSTOMER,ITEM,ACCOUNT,ORDERS, CATEGORY,BRAND,CUSTOM,ORDERDETAIL,BATCHDETAIL,BATCH,QUERY,PAYMENT
-    }
-
-    public SuperDAO getDao(DAOTypes type){
-        switch (type){
-            case ORDERS:return new OrderDAOImpl();
-            case ITEM:return new ItemDAOImpl();
-            case ORDERDETAIL:return new OrderDetailDAOImpl();
-            case BATCH:return new BatchDAOImpl();
-            case BATCHDETAIL:return new BatchDetailDAOImpl();
-            case QUERY:return new QueryDAOImpl();
-            case PAYMENT: return new PaymentDAOImpl();
+    public SuperDAO getDao(DAOTypes type) {
+        switch (type) {
+            case ORDERS:
+                return new OrderDAOImpl();
+            case ITEM:
+                return new ItemDAOImpl();
+            case ORDERDETAIL:
+                return new OrderDetailDAOImpl();
+            case BATCH:
+                return new BatchDAOImpl();
+            case BATCHDETAIL:
+                return new BatchDetailDAOImpl();
+            case QUERY:
+                return new QueryDAOImpl();
+            case PAYMENT:
+                return new PaymentDAOImpl();
             case CATEGORY:
                 return new CategoryDAOImpl();
-//            case BRAND:return new BrandDAOImpl();
-//            case CUSTOM:return new CustomDAOImpl();
-            default:return null;
+            case SUPPLIER:
+                return new SupplierDAOImpl();
+            default:
+                return null;
         }
+    }
+
+    public enum DAOTypes {
+        ITEM, ORDERS, CATEGORY, CUSTOM, ORDERDETAIL, BATCHDETAIL, BATCH, QUERY, PAYMENT, SUPPLIER
     }
 }

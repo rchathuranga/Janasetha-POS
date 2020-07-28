@@ -1,5 +1,7 @@
 package lk.janasetha.thogakade.dto;
 
+import lk.janasetha.thogakade.tm.ButtonTM;
+
 import java.sql.Date;
 
 public class QueryDTO {
@@ -15,7 +17,39 @@ public class QueryDTO {
     private double midPrice;
     private double wholesalePrice;
     private double buyingPrice;
-    private String bilDescription;
+    private String billDescription;
+
+
+    private int itemCount;
+    private int sellingQty;
+    //price after processing sales_type
+    private double sellingPrice;
+    private double sellingTotal;
+
+    private ButtonTM removeButton;
+
+    public QueryDTO() {
+//        removeButton = new ButtonTM("Remove");
+    }
+
+    private QueryDTO(int batchId, int batchDetailId, Date date, int itemCode, String description, int currentQty, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, String billDescription, int itemCount, int sellingQty, double sellingPrice, double sellingTotal, ButtonTM removeButton) {
+        this.batchId = batchId;
+        this.batchDetailId = batchDetailId;
+        this.date = date;
+        this.itemCode = itemCode;
+        this.description = description;
+        this.currentQty = currentQty;
+        this.retailPrice = retailPrice;
+        this.midPrice = midPrice;
+        this.wholesalePrice = wholesalePrice;
+        this.buyingPrice = buyingPrice;
+        this.billDescription = billDescription;
+        this.itemCount = itemCount;
+        this.sellingQty = sellingQty;
+        this.sellingPrice = sellingPrice;
+        this.sellingTotal = sellingTotal;
+        this.removeButton = removeButton;
+    }
 
     public int getBatchId() {
         return batchId;
@@ -87,12 +121,56 @@ public class QueryDTO {
         this.buyingPrice = buyingPrice;
     }
 
-    public String getBilDescription() {
-        return bilDescription;
+    public String getBillDescription() {
+        return billDescription;
     }
-    public void setBilDescription(String bilDescription) {
-        this.bilDescription = bilDescription;
+
+    public void setBillDescription(String billDescription) {
+        this.billDescription = billDescription;
     }
+
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public int getSellingQty() {
+        return sellingQty;
+    }
+
+    public void setSellingQty(int sellingQty) {
+        this.sellingQty = sellingQty;
+    }
+
+
+    public double getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public double getSellingTotal() {
+        return sellingTotal;
+    }
+
+    public void setSellingTotal(double sellingTotal) {
+        this.sellingTotal = sellingTotal;
+    }
+
+    public ButtonTM getRemoveButton() {
+        return removeButton;
+    }
+
+    public void setRemoveButton(ButtonTM removeButton) {
+        this.removeButton = removeButton;
+        removeButton.setItem(this);
+    }
+
 
     @Override
     public String toString() {
@@ -103,11 +181,33 @@ public class QueryDTO {
                 ", itemCode=" + itemCode +
                 ", description='" + description + '\'' +
                 ", currentQty=" + currentQty +
+                ", sellingQty=" + sellingQty +
                 ", retailPrice=" + retailPrice +
                 ", midPrice=" + midPrice +
                 ", wholesalePrice=" + wholesalePrice +
                 ", buyingPrice=" + buyingPrice +
-                ", bilDescription='" + bilDescription + '\'' +
+                ", bilDescription='" + billDescription + '\'' +
                 '}';
+    }
+
+    public QueryDTO clone() {
+        return new QueryDTO(
+                this.batchId,
+                this.batchDetailId,
+                this.date,
+                this.itemCode,
+                this.description,
+                this.currentQty,
+                this.retailPrice,
+                this.midPrice,
+                this.wholesalePrice,
+                this.buyingPrice,
+                this.billDescription,
+                this.itemCount,
+                this.sellingQty,
+                this.sellingPrice,
+                this.sellingTotal,
+                this.removeButton
+        );
     }
 }

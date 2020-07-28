@@ -82,7 +82,7 @@
     -fx-focus-color: transparent;
     -fx-pref-width: 100px;
     -fx-alignment: CENTER;
-    -fx-font-weight: 400px;
+    /*-fx-font-weight: 400px;*/
 }
 
 .tab:selected .tab-label {

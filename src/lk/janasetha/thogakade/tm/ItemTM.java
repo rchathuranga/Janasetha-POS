@@ -14,7 +14,6 @@ public class ItemTM {
     private double sellingPrice;
     private double sellingTotal;
 
-    private ButtonTM removeButton;
 
     public ItemTM() {
     }
@@ -103,14 +102,6 @@ public class ItemTM {
     }
     public void setSellingTotal(double sellingTotal) {
         this.sellingTotal = sellingTotal;
-    }
-
-    public ButtonTM getRemoveButton() {
-        return removeButton;
-    }
-    public void setRemoveButton(ButtonTM removeButton) {
-        this.removeButton = removeButton;
-        removeButton.setItem(this);
     }
 
     @Override

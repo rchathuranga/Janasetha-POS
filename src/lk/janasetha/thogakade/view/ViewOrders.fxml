@@ -43,20 +43,20 @@
                 <String fx:value="table-view"/>
             </styleClass>
         </TableView>
-        <TextField fx:id="txtBillNo" layoutX="251.0" layoutY="34.0" onAction="#txtBillNoAction" prefHeight="35.0"
+        <TextField fx:id="txtBillNo" layoutX="251.0" layoutY="34.0" onAction="#txtBillNoAction" prefHeight="40.0"
                    prefWidth="283.0" promptText="Enter Bill No"/>
-        <JFXButton fx:id="btnSearch" layoutX="923.0" layoutY="33.0" onAction="#btnSearchAction" prefHeight="35.0"
-                   prefWidth="100.0" style="-fx-background-color: #73FFD3;" text="Search">
+        <JFXButton fx:id="btnSearch" layoutX="903.0" layoutY="33.0" onAction="#btnSearchAction" prefHeight="40.0"
+                   prefWidth="140.0" style="-fx-background-color: #73FFD3;" text="Search">
             <font>
-                <Font size="15.0"/>
+                <Font name="Roboto Bold" size="19.0"/>
             </font>
         </JFXButton>
-        <DatePicker fx:id="dtpDate" layoutX="588.0" layoutY="33.0" onAction="#dtpDateAction" prefHeight="35.0"
+        <DatePicker fx:id="dtpDate" layoutX="568.0" layoutY="33.0" onAction="#dtpDateAction" prefHeight="40.0"
                     prefWidth="283.0" promptText="Pick a Date"/>
-        <JFXButton fx:id="btnClear" layoutX="1053.0" layoutY="33.0" onAction="#btnClearAction" prefHeight="35.0"
+        <JFXButton fx:id="btnClear" layoutX="1053.0" layoutY="33.0" onAction="#btnClearAction" prefHeight="40.0"
                    prefWidth="60.0" style="-fx-background-color: #FF8282;" text="Clear">
             <font>
-                <Font size="15.0"/>
+                <Font name="Roboto Regular" size="15.0"/>
             </font>
         </JFXButton>
     </children>
