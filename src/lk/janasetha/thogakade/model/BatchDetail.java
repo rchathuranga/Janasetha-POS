@@ -6,8 +6,8 @@ public class BatchDetail {
     private int bidId;
     private int batchId;
     private int itemCode;
-    private int qty;
-    private int currentStock;
+    private double qty;
+    private double currentStock;
     private double retailPrice;
     private double midPrice;
     private double wholesalePrice;
@@ -23,7 +23,7 @@ public class BatchDetail {
         this.itemCode = itemCode;
     }
 
-    public BatchDetail(int batchId, int itemCode, int qty, int currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
+    public BatchDetail(int batchId, int itemCode, double qty, double currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
         this.batchId = batchId;
         this.itemCode = itemCode;
         this.qty = qty;
@@ -36,7 +36,7 @@ public class BatchDetail {
         this.expireDate = expireDate;
     }
 
-    public BatchDetail(int bidId, int batchId, int itemCode, int qty, int currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
+    public BatchDetail(int bidId, int batchId, int itemCode, double qty, double currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
         this.bidId = bidId;
         this.batchId = batchId;
         this.itemCode = itemCode;
@@ -71,17 +71,19 @@ public class BatchDetail {
         this.itemCode = itemCode;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
-    public void setQty(int qty) {
+
+    public void setQty(double qty) {
         this.qty = qty;
     }
 
-    public int getCurrentStock() {
+    public double getCurrentStock() {
         return currentStock;
     }
-    public void setCurrentStock(int currentStock) {
+
+    public void setCurrentStock(double currentStock) {
         this.currentStock = currentStock;
     }
 

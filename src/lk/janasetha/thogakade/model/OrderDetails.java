@@ -4,7 +4,7 @@ public class OrderDetails {
     private int id;
     private int orderId;
     private int batchItemId;
-    private int qty;
+    private double qty;
     private double unitPrice;
     private double total;
 
@@ -20,7 +20,7 @@ public class OrderDetails {
         this.batchItemId = batchItemId;
     }
 
-    public OrderDetails(int orderId, int batchItemId, int qty, double unitPrice, double total) {
+    public OrderDetails(int orderId, int batchItemId, double qty, double unitPrice, double total) {
         this.orderId = orderId;
         this.batchItemId = batchItemId;
         this.qty = qty;
@@ -28,7 +28,7 @@ public class OrderDetails {
         this.total = total;
     }
 
-    public OrderDetails(int id, int orderId, int batchItemId, int qty, double unitPrice, double total) {
+    public OrderDetails(int id, int orderId, int batchItemId, double qty, double unitPrice, double total) {
         this.id = id;
         this.orderId = orderId;
         this.batchItemId = batchItemId;
@@ -58,10 +58,11 @@ public class OrderDetails {
         this.batchItemId = batchItemId;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
-    public void setQty(int qty) {
+
+    public void setQty(double qty) {
         this.qty = qty;
     }
 

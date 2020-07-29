@@ -14,6 +14,7 @@ import lk.janasetha.thogakade.service.custom.CategoryService;
 import lk.janasetha.thogakade.service.custom.StockService;
 import lk.janasetha.thogakade.service.custom.SupplierService;
 import lk.janasetha.thogakade.tm.BatchDetailTM;
+import lk.janasetha.thogakade.utill.SysConfig;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.sql.Date;
@@ -66,6 +67,8 @@ public class ItemFormController {
     private JFXButton btnClearAll;
     @FXML
     private JFXButton btnClearFields;
+    @FXML
+    private ComboBox<String> cmbMeasureUnit;
 
     private StockService stockService = (StockService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.STOCK);
     private CategoryService categoryService = (CategoryService) ServiceFactory.getInstance().getBO(ServiceFactory.BOTypes.CATEGORY);
@@ -133,6 +136,8 @@ public class ItemFormController {
         tblBatchDetail.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("buyingPrice"));
         tblBatchDetail.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("totalCost"));
 
+        cmbMeasureUnit.setItems(FXCollections.observableArrayList(SysConfig.MEASURE_UNIT_PIECES, SysConfig.MEASURE_UNIT_WEIGHT));
+        cmbMeasureUnit.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -227,7 +232,7 @@ public class ItemFormController {
 //                Alert barcodeAlert = new Alert(Alert.AlertType.INFORMATION, "Enter Product Barcode");
 //                barcodeAlert.  todo set text field to alert
 
-                selectedItem = new ItemDTO(description, billDescription, "ACT", cmbCategory.getSelectionModel().getSelectedItem(), retail, txtItemBarcode.getText());
+                selectedItem = new ItemDTO(description, billDescription, "ACT", cmbCategory.getValue(), retail, cmbMeasureUnit.getValue(), txtItemBarcode.getText());
             }
         }
 
@@ -304,6 +309,7 @@ public class ItemFormController {
         txtBillDescription.setPromptText(selectedItem.getBillDescription());
         txtItemBarcode.setText(selectedItem.getBarcode());
         cmbCategory.getSelectionModel().select(selectedItem.getCategory());
+        cmbMeasureUnit.getSelectionModel().select(selectedItem.getMeasureUnit());
 
         try {
             List<QueryDTO> batchDetailsByItemCode = stockService.getLatestBatchDetailsByItemCode(selectedItem.getItemCode());
@@ -363,6 +369,7 @@ public class ItemFormController {
         txtItemBarcode.setText("");
 
         cmbCategory.getSelectionModel().selectFirst();
+        cmbMeasureUnit.getSelectionModel().selectFirst();
     }
 
     @FXML

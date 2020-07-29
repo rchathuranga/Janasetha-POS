@@ -5,7 +5,7 @@ public class ItemTM {
     private int itemCode;
     private String description;
     private String billDescription;
-    private int qty;
+    private String qty;
     private double retailPrice;
     private double midPrice;
     private double wholesalePrice;
@@ -18,10 +18,10 @@ public class ItemTM {
     public ItemTM() {
     }
 
-    public ItemTM(int itemCode, String description, int qty, double retailPrice, double midPrice, double wholesalePrice) {
+    public ItemTM(int itemCode, String description, double qty, double retailPrice, double midPrice, double wholesalePrice) {
         this.itemCode = itemCode;
         this.description = description;
-        this.qty = qty;
+        this.qty = String.valueOf(qty);
         this.retailPrice = retailPrice;
         this.midPrice = midPrice;
         this.wholesalePrice = wholesalePrice;
@@ -55,11 +55,12 @@ public class ItemTM {
         this.billDescription = billDescription;
     }
 
-    public int getQty() {
-        return qty;
+    public double getQty() {
+        return Double.parseDouble(qty);
     }
-    public void setQty(int qty) {
-        this.qty = qty;
+
+    public void setQty(double qty) {
+        this.qty = String.valueOf(qty);
     }
 
     public double getRetailPrice() {

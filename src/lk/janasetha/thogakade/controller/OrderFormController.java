@@ -157,7 +157,7 @@ public class OrderFormController {
         tblList.setItems(FXCollections.observableList(orderItemList));
     }
 
-    public void loadAvailableItems() {
+    private void loadAvailableItems() {
         try {
             List<QueryDTO> availableStock = stockService.getAvailableStock();
             tblItems.setItems(FXCollections.observableArrayList(availableStock));
@@ -211,14 +211,24 @@ public class OrderFormController {
     private void processSellingQty() {
         if (selectedItem != null) {
             String text = txtQty.getText();
-            if (!text.matches("[0-9]{1,5}")) {
+            String measureUint = selectedItem.getMeasureUnit();
+
+            boolean isValidate;
+            if (measureUint.equalsIgnoreCase(SysConfig.MEASURE_UNIT_PIECES)) {
+                isValidate = (!text.matches("[0-9]{1,5}"));
+            } else {
+                isValidate = (!text.matches("[0-9]{1,5}|[0-9]{1,5}.[0-9]{0,3}"));
+            }
+
+
+            if (isValidate) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered");
                 alert.show();
-                txtQty.setText("");
+                txtQty.setText("1");
                 txtQty.requestFocus();
                 return;
             }
-            selectedItem.setSellingQty(Integer.parseInt(text));
+            selectedItem.setSellingQty(Double.parseDouble(text));
         }
     }
 
@@ -241,15 +251,14 @@ public class OrderFormController {
             });
             selectedItem.setRemoveButton(btnRemove);
 
-
+            System.out.println("selectedItem : " + selectedItem);
             orderItemList.add(selectedItem);
 
             loopOrderItemList();
             paidAmountEvent();
             tblList.refresh();
+            txtQty.setText("1");
             txtBarcode.requestFocus();
-
-
         }
     }
 
@@ -443,13 +452,13 @@ public class OrderFormController {
         String text = txtQty.getText();
         if (text.equalsIgnoreCase("")) return;
 
-        if (!text.matches("[0-9]{1,5}")) {
+/*        if (!text.matches("[0-9]{1,5}")) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Qty Entered");
             alert.show();
             txtQty.setText("1");
             txtQty.requestFocus();
             return;
-        }
+        }*/
 
         processSellingQty();
         setItemDetails();

@@ -16,9 +16,9 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Integer add(Item item) throws Exception{
-        sql = "INSERT INTO item(description,bill_description,status,cate_id,barcode) VALUES(?,?,?,?,?)";
+        sql = "INSERT INTO item(description,bill_description,status,cate_id,measure_unit,barcode) VALUES(?,?,?,?,?,?)";
 
-        boolean itemAdded = CrudUtil.executeUpdate( sql, item.getDescription(), item.getBillDescription(),item.getStatus(), item.getCategoryId(), item.getBarcode());
+        boolean itemAdded = CrudUtil.executeUpdate(sql, item.getDescription(), item.getBillDescription(), item.getStatus(), item.getCategoryId(), item.getMeasureUnit(), item.getBarcode());
 
         if(itemAdded){
 
@@ -58,6 +58,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setStatus(rst.getString("status"));
             item.setRegularPrice(rst.getDouble("regular_price"));
             item.setCategoryId(rst.getInt("cate_id"));
+            item.setMeasureUnit(rst.getString("measure_unit"));
             item.setBarcode(rst.getString("barcode"));
 
 
@@ -81,6 +82,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setStatus(rst.getString("status"));
             item.setRegularPrice(rst.getDouble("regular_price"));
             item.setCategoryId(rst.getInt("cate_id"));
+            item.setMeasureUnit(rst.getString("measure_unit"));
             item.setBarcode(rst.getString("barcode"));
 
             itemList.add(item);
@@ -102,6 +104,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setBillDescription(rst.getString("bill_description"));
             item.setStatus(rst.getString("status"));
             item.setRegularPrice(rst.getDouble("regular_price"));
+            item.setMeasureUnit(rst.getString("measure_unit"));
             item.setCategoryId(rst.getInt("cate_id"));
             item.setBarcode(rst.getString("barcode"));
 
@@ -125,6 +128,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setStatus(rst.getString("status"));
             item.setRegularPrice(rst.getDouble("regular_price"));
             item.setCategoryId(rst.getInt("cate_id"));
+            item.setMeasureUnit(rst.getString("measure_unit"));
             item.setBarcode(rst.getString("barcode"));
 
             itemList.add(item);
@@ -145,6 +149,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setStatus(rst.getString("status"));
             item.setRegularPrice(rst.getDouble("regular_price"));
             item.setCategoryId(rst.getInt("cate_id"));
+            item.setMeasureUnit(rst.getString("measure_unit"));
             item.setBarcode(rst.getString("barcode"));
         }
 

@@ -6,8 +6,8 @@ public class BatchDetailDTO {
     private int bidId;
     private int batchId;
     private ItemDTO item;
-    private int qty;
-    private int currentStock;
+    private double qty;
+    private double currentStock;
     private double retailPrice;
     private double midPrice;
     private double wholesalePrice;
@@ -26,7 +26,7 @@ public class BatchDetailDTO {
         this.item = item;
     }
 
-    public BatchDetailDTO(int batchId, ItemDTO item, int qty, int currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
+    public BatchDetailDTO(int batchId, ItemDTO item, double qty, double currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
         this.batchId = batchId;
         this.item = item;
         this.qty = qty;
@@ -39,7 +39,7 @@ public class BatchDetailDTO {
         this.expireDate = expireDate;
     }
 
-    public BatchDetailDTO(int bidId, int batchId, ItemDTO item, int qty, int currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
+    public BatchDetailDTO(int bidId, int batchId, ItemDTO item, double qty, double currentStock, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, Date manufactureDate, Date expireDate) {
         this.bidId = bidId;
         this.batchId = batchId;
         this.item = item;
@@ -74,17 +74,19 @@ public class BatchDetailDTO {
         this.item = item;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
-    public void setQty(int qty) {
+
+    public void setQty(double qty) {
         this.qty = qty;
     }
 
-    public int getCurrentStock() {
+    public double getCurrentStock() {
         return currentStock;
     }
-    public void setCurrentStock(int currentStock) {
+
+    public void setCurrentStock(double currentStock) {
         this.currentStock = currentStock;
     }
 

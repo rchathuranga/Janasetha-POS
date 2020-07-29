@@ -12,7 +12,7 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<QueryDTO> getAvailableStock() throws Exception {
-        String sql = "Select *,sum(bd.current_stock) as qtyOnHand from item i, batch_details bd where i.item_code=bd.item_code group by i.item_code having qtyOnHand>0";
+        String sql = "Select *,sum(bd.current_stock) as qtyOnHand from item i, batch_details bd where i.item_code=bd.item_code group by i.item_code having qtyOnHand>0 limit 20";
 
         ResultSet rst = CrudUtil.executeQuery(sql);
 
@@ -24,6 +24,7 @@ public class QueryDAOImpl implements QueryDAO {
 
             queryDTO.setItemCode(rst.getInt("item_code"));
             queryDTO.setDescription(rst.getString("description"));
+            queryDTO.setMeasureUnit(rst.getString("measure_unit"));
             queryDTO.setCurrentQty(rst.getInt("qtyOnHand"));
             queryDTO.setRetailPrice(rst.getDouble("retail_price"));
             queryDTO.setMidPrice(rst.getDouble("mid_price"));

@@ -52,7 +52,7 @@ public class BatchServiceImpl implements BatchService {
                     categoryDTO.setDescription(category.getDescription());
                     categoryDTO.setStatus(category.getStatus());
 
-                    itemDTO = new ItemDTO(search.getItemCode(), search.getDescription(), search.getStatus(), categoryDTO, search.getBarcode());
+                    itemDTO = new ItemDTO(search.getItemCode(), search.getDescription(), search.getStatus(), categoryDTO, search.getMeasureUnit(), search.getBarcode());
                 }
 
                 BatchDetailDTO batchDetailDTO = new BatchDetailDTO(bd.getBidId(), bd.getBatchId(), itemDTO, bd.getQty(), bd.getCurrentStock(), bd.getRetailPrice(), bd.getMidPrice(), bd.getWholesalePrice(), bd.getBuyingPrice(), bd.getManufactureDate(), bd.getExpireDate());

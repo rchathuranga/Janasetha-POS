@@ -44,7 +44,7 @@ public class StockServiceImpl implements StockService {
 
 
                 if (itemId == 0) {
-                    Item item = new Item(itemDTO.getDescription(), itemDTO.getBillDescription(), itemDTO.getStatus(), itemDTO.getCategory().getCateId(), itemDTO.getBarcode());
+                    Item item = new Item(itemDTO.getDescription(), itemDTO.getBillDescription(), itemDTO.getStatus(), itemDTO.getCategory().getCateId(), itemDTO.getMeasureUnit(), itemDTO.getBarcode());
                     itemId = itemDAO.add(item);
                 }
 
@@ -84,11 +84,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<CompleteStockDTO> getAllStockDetails() throws Exception {
-
-        Connection connection = DBConnection.getInstance().getConnection();
-
         List<CompleteStockDTO> returnValues = new ArrayList<>();
-
 
         List<Batch> allBatch = batchDAO.getAll();
 
@@ -110,7 +106,7 @@ public class StockServiceImpl implements StockService {
 
                 ItemDTO itemDTO = new ItemDTO(search.getItemCode(),
                         search.getDescription(), search.getStatus(),
-                        categoryDTO,
+                        categoryDTO, search.getMeasureUnit(),
                         search.getBarcode());
 
                 BatchDetailDTO batchDetailDTO = new BatchDetailDTO(batchDetail.getBidId(), batchDetail.getBatchId(),itemDTO, batchDetail.getQty(), batchDetail.getCurrentStock(), batchDetail.getRetailPrice(),
@@ -155,6 +151,7 @@ public class StockServiceImpl implements StockService {
                 itemDTO.setBillDescription(item.getBillDescription());
                 itemDTO.setRegularPrice(item.getRegularPrice());
                 itemDTO.setCategory(categoryDTO);
+                itemDTO.setMeasureUnit(item.getMeasureUnit());
                 itemDTO.setStatus(item.getStatus());
                 itemDTO.setQtyOnHand(batchDetailDAO.getQtyOnHand(item.getItemCode()));
 
@@ -185,6 +182,7 @@ public class StockServiceImpl implements StockService {
                 itemDTO.setBillDescription(item.getBillDescription());
                 itemDTO.setRegularPrice(item.getRegularPrice());
                 itemDTO.setCategory(categoryDTO);
+                itemDTO.setMeasureUnit(item.getMeasureUnit());
                 itemDTO.setStatus(item.getStatus());
                 itemDTO.setQtyOnHand(batchDetailDAO.getQtyOnHand(item.getItemCode()));
 
@@ -215,6 +213,7 @@ public class StockServiceImpl implements StockService {
                 itemDTO.setBillDescription(item.getBillDescription());
                 itemDTO.setRegularPrice(item.getRegularPrice());
                 itemDTO.setCategory(categoryDTO);
+                itemDTO.setMeasureUnit(item.getMeasureUnit());
                 itemDTO.setStatus(item.getStatus());
                 itemDTO.setQtyOnHand(batchDetailDAO.getQtyOnHand(item.getItemCode()));
 

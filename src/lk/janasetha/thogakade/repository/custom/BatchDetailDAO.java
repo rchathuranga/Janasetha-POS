@@ -1,7 +1,7 @@
 package lk.janasetha.thogakade.repository.custom;
 
-import lk.janasetha.thogakade.repository.CrudDAO;
 import lk.janasetha.thogakade.model.BatchDetail;
+import lk.janasetha.thogakade.repository.CrudDAO;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface BatchDetailDAO extends CrudDAO<BatchDetail, Integer> {
 
     List<BatchDetail> getMaxCurrentStock() throws Exception;
 
-    boolean deductCurrentStock(int bidID, int deductQty) throws Exception;
+    boolean deductCurrentStock(int bidID, double deductQty) throws Exception;
 
     List<BatchDetail> getAllByBatchId(int batchId) throws Exception;
 

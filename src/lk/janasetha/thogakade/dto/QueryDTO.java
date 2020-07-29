@@ -12,7 +12,8 @@ public class QueryDTO {
 
     private int itemCode;
     private String description;
-    private int currentQty;
+    private double currentQty;
+    private String measureUnit;
     private double retailPrice;
     private double midPrice;
     private double wholesalePrice;
@@ -21,7 +22,7 @@ public class QueryDTO {
 
 
     private int itemCount;
-    private int sellingQty;
+    private double sellingQty;
     //price after processing sales_type
     private double sellingPrice;
     private double sellingTotal;
@@ -32,13 +33,14 @@ public class QueryDTO {
 //        removeButton = new ButtonTM("Remove");
     }
 
-    private QueryDTO(int batchId, int batchDetailId, Date date, int itemCode, String description, int currentQty, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, String billDescription, int itemCount, int sellingQty, double sellingPrice, double sellingTotal, ButtonTM removeButton) {
+    public QueryDTO(int batchId, int batchDetailId, Date date, int itemCode, String description, double currentQty, String measureUnit, double retailPrice, double midPrice, double wholesalePrice, double buyingPrice, String billDescription, int itemCount, double sellingQty, double sellingPrice, double sellingTotal, ButtonTM removeButton) {
         this.batchId = batchId;
         this.batchDetailId = batchDetailId;
         this.date = date;
         this.itemCode = itemCode;
         this.description = description;
         this.currentQty = currentQty;
+        this.measureUnit = measureUnit;
         this.retailPrice = retailPrice;
         this.midPrice = midPrice;
         this.wholesalePrice = wholesalePrice;
@@ -86,11 +88,20 @@ public class QueryDTO {
         this.description = description;
     }
 
-    public int getCurrentQty() {
+    public double getCurrentQty() {
         return currentQty;
     }
-    public void setCurrentQty(int currentQty) {
+
+    public void setCurrentQty(double currentQty) {
         this.currentQty = currentQty;
+    }
+
+    public String getMeasureUnit() {
+        return measureUnit;
+    }
+
+    public void setMeasureUnit(String measureUnit) {
+        this.measureUnit = measureUnit;
     }
 
     public double getRetailPrice() {
@@ -124,7 +135,6 @@ public class QueryDTO {
     public String getBillDescription() {
         return billDescription;
     }
-
     public void setBillDescription(String billDescription) {
         this.billDescription = billDescription;
     }
@@ -132,24 +142,21 @@ public class QueryDTO {
     public int getItemCount() {
         return itemCount;
     }
-
     public void setItemCount(int itemCount) {
         this.itemCount = itemCount;
     }
 
-    public int getSellingQty() {
+    public double getSellingQty() {
         return sellingQty;
     }
 
-    public void setSellingQty(int sellingQty) {
+    public void setSellingQty(double sellingQty) {
         this.sellingQty = sellingQty;
     }
-
 
     public double getSellingPrice() {
         return sellingPrice;
     }
-
     public void setSellingPrice(double sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
@@ -157,7 +164,6 @@ public class QueryDTO {
     public double getSellingTotal() {
         return sellingTotal;
     }
-
     public void setSellingTotal(double sellingTotal) {
         this.sellingTotal = sellingTotal;
     }
@@ -165,7 +171,6 @@ public class QueryDTO {
     public ButtonTM getRemoveButton() {
         return removeButton;
     }
-
     public void setRemoveButton(ButtonTM removeButton) {
         this.removeButton = removeButton;
         removeButton.setItem(this);
@@ -198,6 +203,7 @@ public class QueryDTO {
                 this.itemCode,
                 this.description,
                 this.currentQty,
+                this.measureUnit,
                 this.retailPrice,
                 this.midPrice,
                 this.wholesalePrice,

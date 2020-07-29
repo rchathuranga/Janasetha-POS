@@ -9,6 +9,7 @@ public class ItemDTO {
     private String status;
     private CategoryDTO category;
     private double regularPrice;
+    private String measureUnit;
     private String barcode;
 
     public ItemDTO() {
@@ -18,20 +19,22 @@ public class ItemDTO {
         this.itemCode = itemCode;
     }
 
-    public ItemDTO(String description, String billDescription, String status, CategoryDTO category, double regularPrice, String barcode) {
+    public ItemDTO(String description, String billDescription, String status, CategoryDTO category, double regularPrice, String measureUnit, String barcode) {
         this.description = description;
         this.billDescription = billDescription;
         this.status = status;
         this.category = category;
         this.regularPrice = regularPrice;
+        this.measureUnit = measureUnit;
         this.barcode = barcode;
     }
 
-    public ItemDTO(int itemCode, String description, String status, CategoryDTO category, String barcode) {
+    public ItemDTO(int itemCode, String description, String status, CategoryDTO category, String measureUnit, String barcode) {
         this.itemCode = itemCode;
         this.description = description;
         this.status = status;
         this.category = category;
+        this.measureUnit = measureUnit;
         this.barcode = barcode;
     }
 
@@ -95,6 +98,14 @@ public class ItemDTO {
         this.regularPrice = regularPrice;
     }
 
+    public String getMeasureUnit() {
+        return measureUnit;
+    }
+
+    public void setMeasureUnit(String measureUnit) {
+        this.measureUnit = measureUnit;
+    }
+
     public String getBarcode() {
         return barcode;
     }
@@ -108,9 +119,11 @@ public class ItemDTO {
                 "itemCode=" + itemCode +
                 ", description='" + description + '\'' +
                 ", billDescription='" + billDescription + '\'' +
+                ", qtyOnHand=" + qtyOnHand +
                 ", status='" + status + '\'' +
                 ", category=" + category +
                 ", regularPrice=" + regularPrice +
+                ", measureUnit='" + measureUnit + '\'' +
                 ", barcode='" + barcode + '\'' +
                 '}';
     }

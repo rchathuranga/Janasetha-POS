@@ -10,8 +10,8 @@ public class BatchDetailTM {
     private int bidId;
     private int itemCode;
     private String itemDescription;
-    private int qty;
-    private int currentStock;
+    private double qty;
+    private double currentStock;
     private double retailPrice;
     private double midPrice;
     private double wholesalePrice;
@@ -75,7 +75,7 @@ public class BatchDetailTM {
         this.itemDescription = itemDescription;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
 
@@ -83,7 +83,7 @@ public class BatchDetailTM {
         this.qty = qty;
     }
 
-    public int getCurrentStock() {
+    public double getCurrentStock() {
         return currentStock;
     }
 

@@ -7,6 +7,7 @@ public class Item {
     private String status;
     private int categoryId;
     private double regularPrice;
+    private String measureUnit;
     private String barcode;
 
 
@@ -17,11 +18,12 @@ public class Item {
         this.itemCode = itemCode;
     }
 
-    public Item(String description, String billDescription, String status, int categoryId, String barcode) {
+    public Item(String description, String billDescription, String status, int categoryId, String measureUnit, String barcode) {
         this.description = description;
         this.billDescription = billDescription;
         this.status = status;
         this.categoryId = categoryId;
+        this.measureUnit = measureUnit;
         this.barcode = barcode;
     }
 
@@ -75,6 +77,14 @@ public class Item {
         this.regularPrice = regularPrice;
     }
 
+    public String getMeasureUnit() {
+        return measureUnit;
+    }
+
+    public void setMeasureUnit(String measureUnit) {
+        this.measureUnit = measureUnit;
+    }
+
     public String getBarcode() {
         return barcode;
     }
@@ -91,6 +101,7 @@ public class Item {
                 ", status='" + status + '\'' +
                 ", categoryId=" + categoryId +
                 ", regularPrice=" + regularPrice +
+                ", measureUnit='" + measureUnit + '\'' +
                 ", barcode='" + barcode + '\'' +
                 '}';
     }

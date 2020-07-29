@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
         for (OrderDetailDTO orderDetail: orderItems) {
             List<QueryDTO> batchDetails = queryDAO.getBatchDetailsByItemCode(orderDetail.getBatchDetailDTO().getItem().getItemCode(),true);
-            int _qty = orderDetail.getQty();
+            double _qty = orderDetail.getQty();
             int i=0;
 
             do {
@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
                 double unitPrice = 0.0;
                 double total = 0.0;
-                int deductQty = 0;
+                double deductQty = 0;
 
                 if(_qty <= queryDTO.getCurrentQty()){
                     batchDetailDAO.deductCurrentStock(queryDTO.getBatchDetailId(), _qty);
@@ -103,10 +103,11 @@ public class OrderServiceImpl implements OrderService {
 
         if (orderDetailAdded) {
             connection.commit();
+        } else {
+            connection.rollback();
+            connection.setAutoCommit(true);
+            orderId = -1;
         }
-
-        connection.rollback();
-        connection.setAutoCommit(true);
         return orderId;
     }
 
@@ -183,6 +184,7 @@ public class OrderServiceImpl implements OrderService {
             itemDTO.setItemCode(item.getItemCode());
             itemDTO.setDescription(item.getDescription());
             itemDTO.setBillDescription(item.getBillDescription());
+            itemDTO.setMeasureUnit(item.getMeasureUnit());
             itemDTO.setItemCode(item.getItemCode());
             BatchDetailDTO batchDetailDTO = new BatchDetailDTO(od.getBatchItemId(), itemDTO);
 

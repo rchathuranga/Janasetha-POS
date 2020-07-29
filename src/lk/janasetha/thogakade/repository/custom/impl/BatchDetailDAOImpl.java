@@ -1,8 +1,8 @@
 package lk.janasetha.thogakade.repository.custom.impl;
 
+import lk.janasetha.thogakade.model.BatchDetail;
 import lk.janasetha.thogakade.repository.CrudUtil;
 import lk.janasetha.thogakade.repository.custom.BatchDetailDAO;
-import lk.janasetha.thogakade.model.BatchDetail;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -116,7 +116,7 @@ public class BatchDetailDAOImpl implements BatchDetailDAO {
     }
 
     @Override
-    public boolean deductCurrentStock(int bidID, int deductQty) throws Exception {
+    public boolean deductCurrentStock(int bidID, double deductQty) throws Exception {
         sql = "UPDATE batch_details SET current_stock = current_stock - ? WHERE bid_id = ?";
         return CrudUtil.executeUpdate( sql, deductQty, bidID);
     }

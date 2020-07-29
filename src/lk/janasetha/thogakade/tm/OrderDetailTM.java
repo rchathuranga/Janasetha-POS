@@ -4,7 +4,7 @@ public class OrderDetailTM {
     private int id;
     private int itemId;
     private String itemDescription;
-    private int qty;
+    private String qty;
     private double unitPrice;
     private double amount;
 
@@ -32,12 +32,12 @@ public class OrderDetailTM {
         this.itemDescription = itemDescription;
     }
 
-    public int getQty() {
-        return qty;
+    public double getQty() {
+        return Double.parseDouble(qty);
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setQty(double qty) {
+        this.qty = String.valueOf(qty);
     }
 
     public double getUnitPrice() {

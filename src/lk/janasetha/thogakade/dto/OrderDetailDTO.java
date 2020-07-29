@@ -3,21 +3,21 @@ package lk.janasetha.thogakade.dto;
 public class OrderDetailDTO {
     private int id;
     private BatchDetailDTO batchDetailDTO;
-    private int qty;
+    private double qty;
     private double unitPrice;
     private double total;
 
     public OrderDetailDTO() {
     }
 
-    public OrderDetailDTO(BatchDetailDTO batchDetailDTO, int qty, double unitPrice, double total) {
+    public OrderDetailDTO(BatchDetailDTO batchDetailDTO, double qty, double unitPrice, double total) {
         this.batchDetailDTO = batchDetailDTO;
         this.qty = qty;
         this.unitPrice = unitPrice;
         this.total = total;
     }
 
-    public OrderDetailDTO(int id, BatchDetailDTO batchDetailDTO, int qty, double unitPrice, double total) {
+    public OrderDetailDTO(int id, BatchDetailDTO batchDetailDTO, double qty, double unitPrice, double total) {
         this.id = id;
         this.batchDetailDTO = batchDetailDTO;
         this.qty = qty;
@@ -39,10 +39,11 @@ public class OrderDetailDTO {
         this.batchDetailDTO = batchDetailDTO;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
-    public void setQty(int qty) {
+
+    public void setQty(double qty) {
         this.qty = qty;
     }
 
